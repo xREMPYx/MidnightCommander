@@ -1,6 +1,7 @@
 ﻿using NewMidnightCommander;
 
 Application.window = new DefaultWindow();
+Console.CursorVisible = false;
 
 while (true)
 {

@@ -13,5 +13,15 @@ namespace NewMidnightCommander
             Console.SetCursorPosition(x, y);
             Console.Write(text);
         }
+
+        public static void Button(int x, int y, string text, int buttonNumber)
+        {
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.BackgroundColor = ConsoleColor.Black;
+            Write(x, y, buttonNumber.ToString());
+            Console.BackgroundColor = ConsoleColor.Blue;
+            Write(x + 1, y, text.PadRight(8));
+            Console.ResetColor();
+        }
     }
 }

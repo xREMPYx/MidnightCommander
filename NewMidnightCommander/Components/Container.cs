@@ -6,32 +6,42 @@ using System.Threading.Tasks;
 
 namespace NewMidnightCommander
 {
-    public class Container : IComponent
+    public class Container : IComponent 
     {
         private int Selected { get; set; } = 0;
         public static bool IsLeftSelected { get; set; } = true;
+        public static string LeftTablePath { get; set; }
+        public static string RightTablePath { get; set; }
 
-        public List<IComponent> components = new();
+        public List<IPanel> components = new();
 
         public void HandleKey(ConsoleKeyInfo info)
         {
             if(info.Key == ConsoleKey.Tab)
             {
-                Selected = (Selected + 1) % 2;
+                this.Selected = (this.Selected + 1) % 2;
                 IsLeftSelected = !IsLeftSelected;
             }
             else
             {
-                components[Selected].HandleKey(info);
+                this.components[this.Selected].HandleKey(info);
             }
+
+            SetPath();
         }
 
         public void Print()
         {
-            foreach (IComponent component in components)
+            foreach (IPanel component in this.components)
             {
                 component.Print();
             }
+        }
+
+        public void SetPath()
+        {
+            LeftTablePath = this.components[0].Path;
+            RightTablePath = this.components[1].Path;
         }
     }
 }

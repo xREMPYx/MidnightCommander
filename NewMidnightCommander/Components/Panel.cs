@@ -6,31 +6,31 @@ using System.Threading.Tasks;
 
 namespace NewMidnightCommander
 {
-    public class Panel : IComponent
+    public class Panel : IComponent, IPanel
     {
-        private string Path { get; set; }
+        public string Path { get; set; }
         private string InitialPath { get; set; }
-        private int Selected { get; set; } = 0;
         private int Top { get; set; } = 0;
+        private int Selected { get; set; } = 0;
         private int PadRightTable { get; set; } = 0;
         private bool LeftTable { get; set; }
-        List<string[]> Files { get; set; }
+        private List<string[]> Files { get; set; }
         public Panel(bool leftTable)
         {
             if (leftTable) 
             {
                 this.Path = DriveStatus.InitialDrives()[0];
-                this.InitialPath = Path;
+                this.InitialPath = this.Path;
                 this.LeftTable = true;
             }
             else 
             {
                 this.Path = DriveStatus.InitialDrives()[1];
-                this.InitialPath = Path;
+                this.InitialPath = this.Path;
                 this.PadRightTable = ProgramSettings.TableWidth / 2;
                 this.LeftTable = false;
             }
-            this.Files = DataGetter.Files(Path);
+            this.Files = DataGetter.Files(this.Path);
         }
 
         public void Print()
@@ -48,7 +48,15 @@ namespace NewMidnightCommander
                         Console.BackgroundColor = ProgramSettings.SelectedBackColor;
                     }
 
-                    Functions.Write(1 + this.PadRightTable, i + 3 - Top, this.Files[i][0].PadRight(ProgramSettings.TableWidth / 2 - 1));
+                    string subItem = this.Files[i][0];
+                    if(this.Files[i][0].Length > 35) { subItem = this.Files[i][0].Substring(0, 35); }
+
+                    Functions.Write(1 + this.PadRightTable, i + 3 - Top, subItem.PadRight(35));
+                    Functions.Write(38 + this.PadRightTable, i + 3 - Top, this.Files[i][1].PadRight(8));
+                    Functions.Write(48 + this.PadRightTable, i + 3 - Top, this.Files[i][2].PadRight(11));
+                    Functions.Write(36 + this.PadRightTable, i + 3 - Top, "│".PadRight(2));
+                    Functions.Write(46 + this.PadRightTable, i + 3 - Top, "│".PadRight(2));
+                   
 
                     if (i == this.Selected)
                     {
@@ -58,10 +66,15 @@ namespace NewMidnightCommander
                 }
                 else
                 {
-                    Functions.Write(1 + this.PadRightTable, i + 3 - Top, String.Empty.PadRight(ProgramSettings.TableWidth / 2 - 1));
+                    Functions.Write(1 + this.PadRightTable, i + 3 - Top, string.Empty.PadRight(35));
+                    Functions.Write(38 + this.PadRightTable, i + 3 - Top, string.Empty.PadRight(8));
+                    Functions.Write(48 + this.PadRightTable, i + 3 - Top, string.Empty.PadRight(11));
+                    Functions.Write(36 + this.PadRightTable, i + 3 - Top, "│".PadRight(2));
+                    Functions.Write(46 + this.PadRightTable, i + 3 - Top, "│".PadRight(2));
                 }
                 Console.SetCursorPosition(1, 1);    
             }
+            StaticPrinter.PrintSelectedItem(this.Files[this.Selected][0], PadRightTable);
         }
 
         public void HandleKey(ConsoleKeyInfo info)
@@ -93,6 +106,8 @@ namespace NewMidnightCommander
             if((this.Selected != 0 || this.Path == this.InitialPath) && this.Files[this.Selected][0][0] != ' ')
             {
                 this.Path = this.Path + this.Files[this.Selected][0].Trim('\\').Trim(' ') + '\\';
+                this.Selected = 0;
+                this.Top = 0;
             }
             else if(this.Selected == 0 && this.Path != this.InitialPath)
             {
@@ -105,6 +120,8 @@ namespace NewMidnightCommander
                 }
 
                 this.Path = newpath;
+                this.Selected = 0;
+                this.Top = 0;
             }
 
             this.Files = DataGetter.Files(this.Path);
@@ -113,10 +130,7 @@ namespace NewMidnightCommander
             {
                 string[] goBackRow = { @"\..", string.Empty, string.Empty };
                 this.Files.Insert(0, goBackRow);
-            }
-
-            this.Selected = 0;
-            this.Top = 0;
+            }           
         }
     }
 }

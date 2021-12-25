@@ -21,6 +21,7 @@ namespace NewMidnightCommander
             this.components.Add(container);
 
             StaticPrinter.PrintTable();
+            StaticPrinter.PrintButtons();
         }
     }
 }

@@ -15,5 +15,6 @@ namespace NewMidnightCommander
         public static ConsoleColor SelectedBackColor = ConsoleColor.Blue;
         public static ConsoleColor ForeColor = ConsoleColor.White;
         public static ConsoleColor BackColor = ConsoleColor.DarkBlue;
+        public static ConsoleColor HedlineText = ConsoleColor.DarkYellow;
     }
 }
