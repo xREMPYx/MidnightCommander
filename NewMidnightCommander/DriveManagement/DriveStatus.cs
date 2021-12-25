@@ -25,6 +25,7 @@ namespace NewMidnightCommander
                 string[] d = { allDrives[0].ToString(), allDrives[1].ToString() };
                 drives = d;
             }
+
             return drives;
         }
     }

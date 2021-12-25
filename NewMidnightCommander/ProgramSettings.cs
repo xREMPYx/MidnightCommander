@@ -10,6 +10,10 @@ namespace NewMidnightCommander
     {
         public static int PanelDataHeight = 25;
         public static int TableHeight = 30;
-        public static int TableWidth = 60;
+        public static int TableWidth = 119;
+        public static ConsoleColor SelectedForeColor = ConsoleColor.White;
+        public static ConsoleColor SelectedBackColor = ConsoleColor.Blue;
+        public static ConsoleColor ForeColor = ConsoleColor.White;
+        public static ConsoleColor BackColor = ConsoleColor.DarkBlue;
     }
 }

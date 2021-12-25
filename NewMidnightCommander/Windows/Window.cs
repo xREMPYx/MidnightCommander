@@ -8,5 +8,22 @@ namespace NewMidnightCommander
 {
     public abstract class Window
     {
+        public List<IComponent> components = new();
+
+        public virtual void Print()
+        {
+            foreach (IComponent component in components)
+            {
+                component.Print();
+            }
+        }
+
+        public virtual void HandleKey(ConsoleKeyInfo info)
+        {
+            foreach (IComponent component in components)
+            {
+                component.HandleKey(info);
+            }
+        }
     }
 }
