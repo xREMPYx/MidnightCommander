@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NewMidnightCommander
 {
-    internal class ProgramSettings
+    public static class ProgramSettings
     {
         public static int PanelDataHeight = 25;
         public static int TableHeight = 30;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NewMidnightCommander
 {
-    internal class Functions
+    public static class Functions
     {
         public static void Write(int x, int y, string text)
         {

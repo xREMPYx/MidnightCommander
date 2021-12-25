@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NewMidnightCommander
 {
-    internal class DefaultWindow : Window
+    public class DefaultWindow : Window
     {
     }
 }

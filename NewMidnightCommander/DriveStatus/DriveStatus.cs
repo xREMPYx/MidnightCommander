@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NewMidnightCommander
 {
-    internal class DriveStatus
+    public static class DriveStatus
     {        
         public static string[] InitialDrives()
         {            

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NewMidnightCommander
 {
-    internal class StaticPrinter
+    public static class StaticPrinter
     {
         public static void PrintTable(bool leftTable)
         {

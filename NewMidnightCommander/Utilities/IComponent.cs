@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NewMidnightCommander
 {
-    internal interface IComponent
+    public interface IComponent
     {
         void Print();
         void HandleKey(ConsoleKeyInfo info);

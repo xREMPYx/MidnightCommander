@@ -6,20 +6,29 @@ using System.Threading.Tasks;
 
 namespace NewMidnightCommander
 {
-    internal class Panel : IComponent
+    public class Panel : IComponent
     {
         private string Path { get; set; }
+        private string InitialPath { get; set; }
         private int Selected { get; set; } = 0;
         private int Top { get; set; } = 0;
         public Panel(bool leftTable)
         {
-            if (leftTable) { Path = DriveStatus.InitialDrives()[0]; }
-            else { Path = DriveStatus.InitialDrives()[1]; }
+            if (leftTable) 
+            {
+                Path = DriveStatus.InitialDrives()[0];
+                InitialPath = Path;            
+            }
+            else 
+            {
+                Path = DriveStatus.InitialDrives()[1];
+                InitialPath = Path;          
+            }
         }
 
         public void Print()
         {
-            for (int i = Top; i < ProgramSettings.PanelHeight + Top; i++)
+            for (int i = Top; i < ProgramSettings.PanelDataHeight + Top; i++)
             {
                 
             }

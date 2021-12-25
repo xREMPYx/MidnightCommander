@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NewMidnightCommander
 {
-    internal static class DataGetter
+    public static class DataGetter
     {
         public static List<string> Files(string path)
         {
