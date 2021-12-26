@@ -31,27 +31,27 @@ namespace NewMidnightCommander
 
         public static string ItemSize(long itemSize)
         {
-            if (itemSize > 1073741824) //Giga Bytes
+            if (itemSize > 1073741824) 
             {
                 Decimal FileSize = Decimal.Divide(itemSize, 1073741824);
-                return String.Format("{0:##.##} GB", FileSize);
+                return String.Format("{0:##}GB", FileSize);
             }
-            else if (itemSize > 1048576) //Mega Bytes
+            else if (itemSize > 1048576) 
             {
                 Decimal FileSize = Decimal.Divide(itemSize, 1048576);
-                return String.Format("{0:##.##} MB", FileSize);
+                return String.Format("{0:##}MB", FileSize);
             }
-            else if (itemSize > 1024) //Kilo Bytes
+            else if (itemSize > 1024) 
             {
                 Decimal FileSize = Decimal.Divide(itemSize, 1024);
-                return String.Format("{0:##.##} KB", FileSize);
+                return String.Format("{0:##}KB", FileSize);
             }
             else if (itemSize > 0)           
             {
                 Decimal FileSize = itemSize;
-                return String.Format("{0:##.##} Bytes", FileSize);
+                return String.Format("{0:##}B", FileSize);
             }
-            return "0 Bytes".ToString();
+            return "0B".ToString();
         }
     }
 }

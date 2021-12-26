@@ -8,40 +8,28 @@ namespace NewMidnightCommander
 {
     public class Container : IComponent 
     {
-        private int Selected { get; set; } = 0;
-        public static bool IsLeftSelected { get; set; } = true;
-        public static string LeftTablePath { get; set; }
-        public static string RightTablePath { get; set; }
-
-        public List<IPanel> components = new();
+        public int Selected { get; set; } = 0;
+        
+        public List<IComponent> components = new();
 
         public void HandleKey(ConsoleKeyInfo info)
         {
-            if(info.Key == ConsoleKey.Tab)
-            {
-                this.Selected = (this.Selected + 1) % 2;
-                IsLeftSelected = !IsLeftSelected;
-            }
-            else
-            {
-                this.components[this.Selected].HandleKey(info);
-            }
+            this.components[this.Selected].HandleKey(info);
 
-            SetPath();
-        }
-
-        public void Print()
-        {
-            foreach (IPanel component in this.components)
+            if (info.Key == ConsoleKey.Tab)
             {
-                component.Print();
+                this.Selected = (this.Selected + 1) % this.components.Count;
             }
         }
 
-        public void SetPath()
+        public void Print(bool active)
         {
-            LeftTablePath = this.components[0].Path;
-            RightTablePath = this.components[1].Path;
+            int index = 0;
+            foreach (IComponent component in this.components)
+            {
+                component.Print(index == this.Selected);
+                index++;
+            }
         }
     }
 }

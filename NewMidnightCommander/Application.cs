@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace NewMidnightCommander
 {
-    public static class Application
+    public class Application
     {
         public static Window window;
+
+        public static List<Window> windows = new();
 
         public static void Print()
         {
@@ -18,6 +20,16 @@ namespace NewMidnightCommander
         public static void HandleKey(ConsoleKeyInfo info)
         {
             Application.window.HandleKey(info);
+        }
+
+        public static void SaveLastWindow()
+        {
+            Application.windows.Add(Application.window);
+        }
+
+        public static void RenewWindow(int LastOrPreLast)
+        {
+            Application.window = Application.windows[Application.windows.Count - LastOrPreLast];
         }
     }
 }

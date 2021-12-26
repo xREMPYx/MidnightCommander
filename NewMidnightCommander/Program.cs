@@ -1,5 +1,6 @@
 ﻿using NewMidnightCommander;
 
+Console.SetWindowSize(ProgramSettings.PanelWidth, ProgramSettings.PanelHeight);
 Application.window = new DefaultWindow();
 Console.CursorVisible = false;
 

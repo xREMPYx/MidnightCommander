@@ -8,7 +8,7 @@ namespace NewMidnightCommander
 {
     public interface IComponent
     {
-        public void Print();
+        public void Print(bool active);
         public void HandleKey(ConsoleKeyInfo info);
     }
 }

@@ -19,8 +19,9 @@ namespace NewMidnightCommander
             Console.ForegroundColor = ConsoleColor.White;
             Console.BackgroundColor = ConsoleColor.Black;
             Write(x, y, buttonNumber.ToString());
-            Console.BackgroundColor = ConsoleColor.Blue;
-            Write(x + 1, y, text.PadRight(8));
+            Console.BackgroundColor = ProgramSettings.SelectedBackColor;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Write(x + buttonNumber.ToString().Length, y, text.PadRight(6));
             Console.ResetColor();
         }
     }
