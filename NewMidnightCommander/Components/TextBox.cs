@@ -51,7 +51,7 @@ namespace NewMidnightCommander
             else if (info.Key != ConsoleKey.Tab){ AddChar(info); }
         }
 
-        // HandleKey Actions
+        // Text Actions
 
         private void AddChar(ConsoleKeyInfo info)
         {

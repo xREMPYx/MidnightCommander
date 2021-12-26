@@ -56,7 +56,7 @@ namespace NewMidnightCommander
                     if (this.Files[i][0].Length > 35) { subItem = this.Files[i][0].Substring(0, 35); }
 
                     Functions.Write(1 + this.PadRightPanel, i + 3 - Top, subItem.PadRight(38));
-                    Functions.Write(41 + this.PadRightPanel, i + 3 - Top, this.Files[i][1].PadRight(6));
+                    Functions.Write(41 + this.PadRightPanel, i + 3 - Top, this.Files[i][1].PadRight(5));
                     Functions.Write(48 + this.PadRightPanel, i + 3 - Top, this.Files[i][2].PadRight(11));
                     Functions.Write(39 + this.PadRightPanel, i + 3 - Top, "│".PadRight(2));
                     Functions.Write(46 + this.PadRightPanel, i + 3 - Top, "│".PadRight(2));
@@ -71,7 +71,7 @@ namespace NewMidnightCommander
                 else
                 {
                     Functions.Write(1 + this.PadRightPanel, i + 3 - Top, string.Empty.PadRight(38));
-                    Functions.Write(41 + this.PadRightPanel, i + 3 - Top, string.Empty.PadRight(8));
+                    Functions.Write(41 + this.PadRightPanel, i + 3 - Top, string.Empty.PadRight(5));
                     Functions.Write(48 + this.PadRightPanel, i + 3 - Top, string.Empty.PadRight(11));
                     Functions.Write(39 + this.PadRightPanel, i + 3 - Top, "│".PadRight(2));
                     Functions.Write(46 + this.PadRightPanel, i + 3 - Top, "│".PadRight(2));
@@ -94,7 +94,7 @@ namespace NewMidnightCommander
             else if (info.Key == ConsoleKey.F8 && IsSelectedItem()) { Delete(); }
         }
 
-        // HandleKey Actions
+        // Move Actions
 
         private void SelectUp()
         {

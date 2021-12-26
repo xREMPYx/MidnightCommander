@@ -18,6 +18,7 @@ namespace NewMidnightCommander
             this.SecondAdditionalText = "Are you sure you want to delete it?";
             this.ForeColor = ConsoleColor.Black;
             this.BackColor = ConsoleColor.DarkRed;
+            this.TitleColor = ConsoleColor.Black;
             this.ItemBackColor = ConsoleColor.DarkRed;
             this.SourcePath = sourcePath;
             this.ShowAdditional = true;
@@ -27,13 +28,13 @@ namespace NewMidnightCommander
             Button OkButton = new Button((ProgramSettings.PanelWidth / 2) - (this.Width / 2) + 7, (ProgramSettings.PanelHeight / 2) + (this.Height / 2) - 1, "OK") 
             {
                 BackColor = ConsoleColor.DarkRed ,
-                SelectedColor = ConsoleColor.White
+                SelectedColor = ConsoleColor.Gray
             };
 
             Button CancelButton = new Button((ProgramSettings.PanelWidth / 2) - (this.Width / 2) + 30, (ProgramSettings.PanelHeight / 2) + (this.Height / 2) - 1, "Cancel")
             { 
                 BackColor = ConsoleColor.DarkRed, 
-                SelectedColor = ConsoleColor.White 
+                SelectedColor = ConsoleColor.Gray
             };
 
             OkButton.EnterClick += OkPressed;
