@@ -9,6 +9,7 @@ namespace NewMidnightCommander
     public class Delete : PopUpWindow
     {
         public string SourcePath { get; set; }
+
         public Delete(string sourcePath)
         {
             this.Height = 5;
@@ -35,6 +36,8 @@ namespace NewMidnightCommander
             this.component = container;
             this.PrintBox();           
         }
+
+        // Button methods
 
         private void OkPressed()
         {

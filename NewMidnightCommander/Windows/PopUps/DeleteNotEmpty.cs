@@ -9,13 +9,14 @@ namespace NewMidnightCommander
     public class DeleteNotEmpty : PopUpWindow
     {
         public string SourcePath { get; set; }
+
         public DeleteNotEmpty(string sourcePath)
         {
             this.Height = 5;
             this.Width = 50;
             this.Title = "Delete Alert";
-            this.AdditionalText = "Dir is not empty! ";
-            this.SecondAdditionalText = "Are you sure you want to delete it?";
+            this.AdditionalText = "Dir is not empty!".PadLeft(this.Width/2 + 8);
+            this.SecondAdditionalText = "Are you sure you want to delete it?".PadLeft(this.Width - 8);
             this.ForeColor = ConsoleColor.Black;
             this.BackColor = ConsoleColor.DarkRed;
             this.TitleColor = ConsoleColor.Black;
@@ -47,13 +48,15 @@ namespace NewMidnightCommander
             this.PrintBox();           
         }
 
+        // Button methods
+
         private void OkPressed()
         {
             try
             {
                 Directory.Delete(this.SourcePath, true);
             }
-            catch  { }
+            catch  { Functions.TextAlert("Error!"); }
             StaticPrinter.PrintTable();
             Application.RenewWindow(1);           
         }

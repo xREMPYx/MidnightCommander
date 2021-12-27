@@ -12,7 +12,7 @@ namespace NewMidnightCommander
         
         public List<IComponent> components = new();
 
-        public void HandleKey(ConsoleKeyInfo info)
+        public virtual void HandleKey(ConsoleKeyInfo info)
         {
             this.components[this.Selected].HandleKey(info);
 
@@ -22,13 +22,15 @@ namespace NewMidnightCommander
             }
         }
 
-        public void Print(bool active)
+        public virtual void Print(bool active)
         {
             int index = 0;
+    
             foreach (IComponent component in this.components)
             {
+                Console.CursorVisible = false;
                 component.Print(index == this.Selected);
-                index++;
+                index++;    
             }
         }
     }

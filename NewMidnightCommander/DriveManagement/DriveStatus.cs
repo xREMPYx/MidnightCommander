@@ -9,10 +9,9 @@ namespace NewMidnightCommander
 {
     public static class DriveStatus
     {        
+        public static DriveInfo[] allDrives = DriveInfo.GetDrives();
         public static string[] InitialDrives()
         {            
-            DriveInfo[] allDrives = DriveInfo.GetDrives();
-
             string[] drives;
 
             if (allDrives.Length == 1) 

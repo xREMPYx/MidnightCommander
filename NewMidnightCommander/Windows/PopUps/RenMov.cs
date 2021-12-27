@@ -11,6 +11,7 @@ namespace NewMidnightCommander
         public string SourcePath { get; set; }
 
         private TextBox textBox;
+
         public RenMov(string sourcePath)
         {
             this.Height = 8;
@@ -43,12 +44,18 @@ namespace NewMidnightCommander
             this.PrintBox();           
         }
 
+        // Button methods
+
         private void OkPressed()
         {
             if (!Directory.Exists(this.textBox.Text) && !File.Exists(this.textBox.Text))
             {
                 try { File.Move(this.SourcePath, this.textBox.Text); }
-                catch { Directory.Move(this.SourcePath, this.textBox.Text);  }
+                catch { try { Directory.Move(this.SourcePath, this.textBox.Text); } catch { Functions.TextAlert("Error!"); }  }
+            }
+            else
+            {
+                Functions.TextAlert("Already Exists!");
             }
             StaticPrinter.PrintTable();
             Application.RenewWindow(1);           

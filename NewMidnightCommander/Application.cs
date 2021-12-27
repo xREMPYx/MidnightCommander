@@ -14,7 +14,7 @@ namespace NewMidnightCommander
 
         public static void Print()
         {
-            Application.window.Print();
+            Application.window.Print();            
         }
 
         public static void HandleKey(ConsoleKeyInfo info)

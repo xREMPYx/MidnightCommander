@@ -11,8 +11,11 @@ namespace NewMidnightCommander
         public static int PanelDataHeight = 25;
         public static int PanelHeight = 30;
         public static int PanelWidth = 119;
+
         public static ConsoleColor SelectedForeColor = ConsoleColor.White;
         public static ConsoleColor SelectedBackColor = ConsoleColor.Blue;
+
+        public static ConsoleColor AlertTextColor = ConsoleColor.Red;
 
         public static ConsoleColor ForeColor = ConsoleColor.White;
         public static ConsoleColor BackColor = ConsoleColor.DarkBlue;
@@ -21,10 +24,10 @@ namespace NewMidnightCommander
         public static ConsoleColor TitleBoxColor = ConsoleColor.Blue;
         public static ConsoleColor BackBoxColor = ConsoleColor.Gray;
         public static ConsoleColor ForeBoxColor = ConsoleColor.Black;
-        public static ConsoleColor SelectedBoxColor = ConsoleColor.Red;
-        
-        public static string LeftPanelPath;
-        public static string RightPanelPath;
+        public static ConsoleColor SelectedBoxColor = ConsoleColor.DarkRed;
+
+        public static string LeftPanelPath = DriveStatus.InitialDrives()[0];
+        public static string RightPanelPath = DriveStatus.InitialDrives()[1];
         public static bool LeftPanelActive = true;
     }
 }

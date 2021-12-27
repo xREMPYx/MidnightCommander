@@ -9,6 +9,7 @@ namespace NewMidnightCommander
     public class MkDir : PopUpWindow
     {
         private TextBox textBox;
+
         public MkDir(string path)
         {
             this.Height = 5;
@@ -38,9 +39,11 @@ namespace NewMidnightCommander
             this.PrintBox();           
         }
 
+        // Button methods
+
         private void OkPressed()
         {
-            Directory.CreateDirectory(this.textBox.Text);
+            try { Directory.CreateDirectory(this.textBox.Text); } catch { Functions.TextAlert("Error!"); }
             StaticPrinter.PrintTable();
             Application.RenewWindow(1);           
         }

@@ -12,6 +12,7 @@ namespace NewMidnightCommander
         public string DestinationPath { get; set; }
 
         private TextBox textBox;
+
         public Copy(string sourcePath, string destinationPath)
         {
             this.Height = 8;
@@ -45,12 +46,18 @@ namespace NewMidnightCommander
             this.PrintBox();           
         }
 
+        // Button methods
+
         private void OkPressed()
         {
             if (!Directory.Exists(this.textBox.Text) && !File.Exists(this.textBox.Text))
             {
                 try { File.Copy(this.SourcePath, this.textBox.Text); }
-                catch { this.CopyDirectory(this.SourcePath, this.textBox.Text);  }
+                catch { try { this.CopyDirectory(this.SourcePath, this.textBox.Text); } catch { Functions.TextAlert("Error!"); } }
+            }
+            else
+            {
+                Functions.TextAlert("Already Exists!");
             }
             StaticPrinter.PrintTable();
             Application.RenewWindow(1);           
@@ -61,6 +68,8 @@ namespace NewMidnightCommander
             StaticPrinter.PrintTable();
             Application.RenewWindow(1);           
         }
+
+        // Copy All function
 
         private void CopyDirectory(string sourceDirectory, string targetDirectory)
         {

@@ -19,7 +19,7 @@ namespace NewMidnightCommander
         public ConsoleColor TitleColor { get; set; } = ProgramSettings.TitleBoxColor;
         public ConsoleColor ItemBackColor { get; set; } = ProgramSettings.TitleBoxColor;
 
-        public void PrintBox()
+        public virtual void PrintBox()
         {
             Console.ForegroundColor = this.ForeColor;
             Console.BackgroundColor = this.BackColor;
@@ -56,13 +56,13 @@ namespace NewMidnightCommander
                 Functions.Write((ProgramSettings.PanelWidth / 2) - (this.Width / 2) + 1, (ProgramSettings.PanelHeight / 2) - (this.Height / 2) + 1, this.AdditionalText);
                 Console.BackgroundColor = this.ItemBackColor;                
 
-                if(this.SecondAdditionalText.Length > 49) 
+                if(this.SecondAdditionalText.Length > this.Width - 1) 
                 {
-                    this.SecondAdditionalText = this.SecondAdditionalText.Substring(this.SecondAdditionalText.Length - 49, 49);
+                    this.SecondAdditionalText = this.SecondAdditionalText.Substring(this.SecondAdditionalText.Length - this.Width - 1, this.Width - 1);
                 }
 
-                Functions.Write((ProgramSettings.PanelWidth / 2) - (this.Width / 2) + 1, (ProgramSettings.PanelHeight / 2) - (this.Height / 2) + 2, this.SecondAdditionalText.PadRight(49));
-            }                  
+                Functions.Write((ProgramSettings.PanelWidth / 2) - (this.Width / 2) + 1, (ProgramSettings.PanelHeight / 2) - (this.Height / 2) + 2, this.SecondAdditionalText.PadRight(this.Width - 1));
+            }
         }
     }
 }

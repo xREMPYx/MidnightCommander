@@ -60,6 +60,7 @@ namespace NewMidnightCommander
                 Functions.Write(40 + i, 1, "Size".PadLeft(5).PadRight(6));
                 Functions.Write(47 + i, 1, "MT".PadLeft(7).PadRight(12));
             }
+            PrintButtons();
         }
 
         public static void PrintButtons()
@@ -85,10 +86,21 @@ namespace NewMidnightCommander
 
         public static void PrintPath(string path, int padRightTable)
         {
-            if(path.Length - 1 > ProgramSettings.PanelWidth / 2 - 4) { path = path.Substring(path.Length - 56, 56); }
+            if(path.Length - 1 > ProgramSettings.PanelWidth / 2 - 4)
+            { 
+                path = path.Substring(path.Length - 56, 56);
+            }
 
-            if(padRightTable > 0 && ProgramSettings.LeftPanelActive != true) { Console.BackgroundColor = ProgramSettings.SelectedBackColor; }
-            if(padRightTable == 0 && ProgramSettings.LeftPanelActive) { Console.BackgroundColor = ProgramSettings.SelectedBackColor; }
+            if(padRightTable > 0 && ProgramSettings.LeftPanelActive != true) 
+            { 
+                Console.BackgroundColor = ProgramSettings.SelectedBackColor; 
+            }
+
+            if(padRightTable == 0 && ProgramSettings.LeftPanelActive)
+            { 
+                Console.BackgroundColor = ProgramSettings.SelectedBackColor; 
+            }
+
             Functions.Write(2 + padRightTable, 0, path);
 
             Console.ForegroundColor = ProgramSettings.ForeColor;

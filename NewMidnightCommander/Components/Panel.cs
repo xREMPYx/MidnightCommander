@@ -8,34 +8,38 @@ namespace NewMidnightCommander
 {
     public class Panel : IComponent
     {
-        public string Path { get; set; }
-        private string InitialPath { get; set; }
-        private int Top { get; set; } = 0;
-        private int Selected { get; set; } = 0;
-        private int PadRightPanel { get; set; } = 0;
-        private bool LeftPanel { get; set; }
-        private List<string[]> Files { get; set; }
+        public string Path;
+        private string InitialPath;
+
+        private int Top = 0;
+        private int Selected  = 0;
+        private int PadRightPanel = 0;
+
+        private bool LeftPanel;
+
+        private List<string[]> Files;
+
         public Panel(bool leftPanel)
         {
             if (leftPanel)
             {
-                this.Path = DriveStatus.InitialDrives()[0];
+                this.Path = ProgramSettings.LeftPanelPath;
                 this.InitialPath = this.Path;
                 this.LeftPanel = true;
             }
             else
             {
-                this.Path = DriveStatus.InitialDrives()[1];
+                this.Path = ProgramSettings.RightPanelPath;
                 this.InitialPath = this.Path;
                 this.PadRightPanel = ProgramSettings.PanelWidth / 2;
                 this.LeftPanel = false;
             }
             this.Files = DataGetter.Files(this.Path);
-            this.SetOtherPanelPath();
         }
 
         public void Print(bool active)
         {
+            this.CheckPath();
             this.UpdateList();
             this.SelectedCondition();
 
@@ -79,7 +83,8 @@ namespace NewMidnightCommander
                 Console.SetCursorPosition(1, 1);
             }
             StaticPrinter.PrintSelectedItem(this.Files[this.Selected][0], PadRightPanel);
-            StaticPrinter.PrintPath(this.Path, this.PadRightPanel);        
+            StaticPrinter.PrintPath(this.Path, this.PadRightPanel);
+            Functions.ReadKeyError();
         }
 
         public void HandleKey(ConsoleKeyInfo info)
@@ -87,8 +92,11 @@ namespace NewMidnightCommander
             if (info.Key == ConsoleKey.UpArrow) { SelectUp(); }
             else if (info.Key == ConsoleKey.DownArrow) { SelectDown(); }
             else if (info.Key == ConsoleKey.Enter) { Enter(); }
+            else if (info.Key == ConsoleKey.PageUp) { PageUp(); }
+            else if (info.Key == ConsoleKey.PageDown) { PageDown(); }
             else if (info.Key == ConsoleKey.Tab) { SwitchPanel(); }
             else if (info.Key == ConsoleKey.F7) { MkDir(); }
+            else if (info.Key == ConsoleKey.F9) { ChangeDrive(); }
             else if (info.Key == ConsoleKey.F5 && IsSelectedItem()) { Copy(); }
             else if (info.Key == ConsoleKey.F6 && IsSelectedItem()) { RenMov(); }
             else if (info.Key == ConsoleKey.F8 && IsSelectedItem()) { Delete(); }
@@ -112,7 +120,10 @@ namespace NewMidnightCommander
         {
             if ((this.Selected != 0 || this.Path == this.InitialPath) && this.Files[this.Selected][0][0] != ' ')
             {
-                this.Path = this.Path + this.Files[this.Selected][0].Trim('\\').Trim(' ') + '\\';
+                try { DirectoryInfo directoryInfo = new(this.Path + this.Files[this.Selected][0].Remove(0, 1)); directoryInfo.GetDirectories(); }
+                catch { Functions.TextAlert("Directory cannot be opened!"); return; }
+
+                this.Path = this.Path + this.Files[this.Selected][0].Remove(0, 1) + '\\';
                 this.Selected = 0;
                 this.Top = 0;
             }
@@ -132,6 +143,20 @@ namespace NewMidnightCommander
             }
          
             this.SetOtherPanelPath();
+        }
+
+        private void PageUp()
+        {
+            this.Top = 0;
+            this.Selected = 0;
+        }
+
+        private void PageDown()
+        {
+            this.Selected = this.Files.Count - 1;
+            this.Top = this.Files.Count - ProgramSettings.PanelHeight + 7;
+
+            if(this.Top < 0) { this.Top = 0; }
         }
 
         private void SwitchPanel()
@@ -175,6 +200,12 @@ namespace NewMidnightCommander
             Application.window = new MkDir(Path);
         }
 
+        private void ChangeDrive()
+        {
+            Application.SaveLastWindow();
+            Application.window = new ChangeDrive();
+        }
+
         // Others
 
         private bool IsSelectedItem()
@@ -198,6 +229,26 @@ namespace NewMidnightCommander
         {
             if (LeftPanel) { ProgramSettings.LeftPanelPath = Path; }
             else { ProgramSettings.RightPanelPath = Path; }
+        }
+
+        private void CheckPath()
+        {
+            if (LeftPanel) 
+            { 
+                if (Path != ProgramSettings.LeftPanelPath) 
+                { 
+                    Path = ProgramSettings.LeftPanelPath; 
+                    InitialPath = ProgramSettings.LeftPanelPath; 
+                } 
+            }
+            else 
+            { 
+                if (Path != ProgramSettings.RightPanelPath) 
+                { 
+                    Path = ProgramSettings.RightPanelPath;
+                    InitialPath = ProgramSettings.RightPanelPath; 
+                }
+            }
         }
 
         private void SelectedCondition()

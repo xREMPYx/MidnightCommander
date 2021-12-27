@@ -46,9 +46,8 @@ namespace NewMidnightCommander
                 label = "[   " + Label + "   ]";
             }
 
-            Console.BackgroundColor = this.BackColor;
+            Console.BackgroundColor = this.BackColor;          
             Functions.Write(PositionX,PositionY,label);
-            Console.BackgroundColor = this.BackColor;
             Console.ForegroundColor = this.ForeColor;
         }
     }
