@@ -27,7 +27,7 @@ namespace NewMidnightCommander
 
         public static void ReadKeyError()
         {
-            Console.SetCursorPosition(103, 29);
+            Console.SetCursorPosition(103, 30);
             Console.BackgroundColor= ConsoleColor.Black;
             Console.ForegroundColor= ConsoleColor.Black;
         }
@@ -35,14 +35,14 @@ namespace NewMidnightCommander
         public static void TextAlert(string text)
         {
             Console.ForegroundColor = ProgramSettings.AlertTextColor;
-            Write(1,ProgramSettings.PanelHeight, text);
+            Write(1,ProgramSettings.PanelHeight + 1, text);
             ReadKeyError();
         }
 
         public static void ClearTextAlert()
         {
             ReadKeyError();
-            Write(0, ProgramSettings.PanelHeight, string.Empty.PadRight(ProgramSettings.PanelWidth));
+            Write(0, ProgramSettings.PanelHeight + 1, string.Empty.PadRight(ProgramSettings.PanelWidth));
         }
     }
 }

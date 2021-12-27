@@ -8,7 +8,7 @@ namespace NewMidnightCommander
 {
     public static class ProgramSettings
     {
-        public static int PanelDataHeight = 25;
+        public static int PanelDataHeight = 23;
         public static int PanelHeight = 30;
         public static int PanelWidth = 119;
 
@@ -16,6 +16,8 @@ namespace NewMidnightCommander
         public static ConsoleColor SelectedBackColor = ConsoleColor.Blue;
 
         public static ConsoleColor AlertTextColor = ConsoleColor.Red;
+
+        public static ConsoleColor ForeMenuColor = ConsoleColor.Black;
 
         public static ConsoleColor ForeColor = ConsoleColor.White;
         public static ConsoleColor BackColor = ConsoleColor.DarkBlue;
