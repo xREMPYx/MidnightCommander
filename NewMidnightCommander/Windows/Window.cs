@@ -8,7 +8,7 @@ namespace NewMidnightCommander
 {
     public abstract class Window
     {
-        public IComponent component { get; set; }
+        public IComponent component;
 
         public virtual void Print()
         {

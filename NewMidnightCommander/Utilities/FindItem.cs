@@ -29,28 +29,28 @@ namespace NewMidnightCommander
         {
             bool shouldBeAdded = false;
             List<string> matches = new();
-            for (int i = 0; i < Matches.Count; i++)
+            for (int i = 0; i < this.Matches.Count; i++)
             {
-                if (index > Matches[i].Length - 1) { }
-                else { if (Matches[i][index].ToString() == info.KeyChar.ToString()) { matches.Add(Matches[i]); shouldBeAdded = true; } }                
+                if (this.index > this.Matches[i].Length - 1) { }
+                else { if (this.Matches[i][this.index].ToString() == info.KeyChar.ToString()) { matches.Add(this.Matches[i]); shouldBeAdded = true; } }                
             }
-            if (shouldBeAdded) { sb.Append(info.KeyChar.ToString()); index++; this.Matches = matches; }         
+            if (shouldBeAdded) { this.sb.Append(info.KeyChar.ToString()); this.index++; this.Matches = matches; }         
         }
 
         public int selectedForFileManager(int selected)
         {
-            if(ItemNames.Count == Matches.Count) { return selected; }
+            if(this.ItemNames.Count == this.Matches.Count) { return selected; }
 
-            for (int i = 0; i < ItemNames.Count; i++)
+            for (int i = 0; i < this.ItemNames.Count; i++)
             {
-                if(sb.Length <= ItemNames[i].Length)
+                if(this.sb.Length <= this.ItemNames[i].Length)
                 {
                     int count = 0;
-                    for (int d = 0; d < sb.Length; d++)
+                    for (int d = 0; d < this.sb.Length; d++)
                     {
-                        if (ItemNames[i][d].ToString() == sb[d].ToString()) { count++; }
+                        if (this.ItemNames[i][d].ToString() == this.sb[d].ToString()) { count++; }
                     }
-                    if(count >= sb.Length) { return i; }
+                    if(count >= this.sb.Length) { return i; }
                 }             
             }
             return selected;

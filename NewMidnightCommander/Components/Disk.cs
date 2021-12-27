@@ -36,10 +36,10 @@ namespace NewMidnightCommander
 
         public void Print(bool active)
         {
-            if (active) { Console.ForegroundColor = ProgramSettings.SelectedBoxColor; }
-            else { Console.ForegroundColor = ProgramSettings.ForeBoxColor; }
+            if (active) { Console.ForegroundColor = ProgramSettings.BoxSelectedColor; }
+            else { Console.ForegroundColor = ProgramSettings.BoxForeColor; }
 
-            Console.BackgroundColor = ProgramSettings.BackBoxColor;
+            Console.BackgroundColor = ProgramSettings.BoxBackColor;
 
             Functions.Write(this.PositionX, this.PositionY, this.Name.PadRight(5));
             Functions.Write(this.PositionX, this.PositionY + 2, this.TotalSize.PadRight(5));
@@ -59,7 +59,7 @@ namespace NewMidnightCommander
                     ProgramSettings.RightPanelPath = this.Name;
                 }
                 StaticPrinter.PrintTable();
-                Application.RenewWindow(1);
+                Application.RenewWindow();
             }
             else
             {

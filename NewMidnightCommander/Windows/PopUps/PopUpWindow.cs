@@ -14,10 +14,10 @@ namespace NewMidnightCommander
         public int Width { get; set; }
         public int Height { get; set; }
         public bool ShowAdditional { get; set; }
-        public ConsoleColor ForeColor { get; set; } = ProgramSettings.ForeBoxColor;
-        public ConsoleColor BackColor { get; set; } = ProgramSettings.BackBoxColor;
-        public ConsoleColor TitleColor { get; set; } = ProgramSettings.TitleBoxColor;
-        public ConsoleColor ItemBackColor { get; set; } = ProgramSettings.TitleBoxColor;
+        public ConsoleColor ForeColor { get; set; } = ProgramSettings.BoxForeColor;
+        public ConsoleColor BackColor { get; set; } = ProgramSettings.BoxBackColor;
+        public ConsoleColor TitleColor { get; set; } = ProgramSettings.BoxTitleColor;
+        public ConsoleColor ItemBackColor { get; set; } = ProgramSettings.BoxTitleColor;
 
         public virtual void PrintBox()
         {

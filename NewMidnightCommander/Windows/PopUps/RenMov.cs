@@ -58,13 +58,13 @@ namespace NewMidnightCommander
                 Functions.TextAlert("Already Exists!");
             }
             StaticPrinter.PrintTable();
-            Application.RenewWindow(1);           
+            Application.RenewWindow();           
         }
         
         private void CancelPressed()
         {
             StaticPrinter.PrintTable();
-            Application.RenewWindow(1);           
+            Application.RenewWindow();           
         }
     }
 }

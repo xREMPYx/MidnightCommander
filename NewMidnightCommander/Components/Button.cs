@@ -12,9 +12,9 @@ namespace NewMidnightCommander
         public string Label { get; set; }
         public int PositionX { get; set; }
         public int PositionY { get; set; }
-        public ConsoleColor ForeColor { get; set; } = ProgramSettings.ForeBoxColor;
-        public ConsoleColor BackColor { get; set; } = ProgramSettings.BackBoxColor;
-        public ConsoleColor SelectedColor { get; set; } = ProgramSettings.SelectedBoxColor;
+        public ConsoleColor ForeColor { get; set; } = ProgramSettings.BoxForeColor;
+        public ConsoleColor BackColor { get; set; } = ProgramSettings.BoxBackColor;
+        public ConsoleColor SelectedColor { get; set; } = ProgramSettings.BoxSelectedColor;
 
         public Button(int x, int y, string label)
         {

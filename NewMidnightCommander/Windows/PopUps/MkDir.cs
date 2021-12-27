@@ -45,13 +45,13 @@ namespace NewMidnightCommander
         {
             try { Directory.CreateDirectory(this.textBox.Text); } catch { Functions.TextAlert("Error!"); }
             StaticPrinter.PrintTable();
-            Application.RenewWindow(1);           
+            Application.RenewWindow();           
         }
         
         private void CancelPressed()
         {
             StaticPrinter.PrintTable();
-            Application.RenewWindow(1);
+            Application.RenewWindow();
         }
     }
 }

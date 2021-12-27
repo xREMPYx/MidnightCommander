@@ -26,21 +26,21 @@ namespace NewMidnightCommander
         {
             if (active)
             {             
-                Console.ForegroundColor = ProgramSettings.SelectedBoxColor;
+                Console.ForegroundColor = ProgramSettings.BoxSelectedColor;
                 Console.CursorVisible = true;
             }
             else
             {                
-                Console.ForegroundColor = ProgramSettings.ForeBoxColor;
+                Console.ForegroundColor = ProgramSettings.BoxForeColor;
                 Console.CursorVisible = false;
             }
 
-            Console.BackgroundColor = ProgramSettings.BackBoxColor;
+            Console.BackgroundColor = ProgramSettings.BoxBackColor;
 
             Functions.Write(PositionX, PositionY, Title);
 
-            Console.BackgroundColor = ProgramSettings.TitleBoxColor;
-            Console.ForegroundColor = ProgramSettings.ForeBoxColor;
+            Console.BackgroundColor = ProgramSettings.BoxTitleColor;
+            Console.ForegroundColor = ProgramSettings.BoxForeColor;
 
             string text = Text;
             if(Text.Length > 48) 

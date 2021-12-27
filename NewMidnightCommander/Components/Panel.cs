@@ -46,8 +46,8 @@ namespace NewMidnightCommander
             this.UpdateList();
             this.SelectedCondition();
 
-            Console.ForegroundColor = ProgramSettings.ForeColor;
-            Console.BackgroundColor = ProgramSettings.BackColor;
+            Console.ForegroundColor = ProgramSettings.PanelForeColor;
+            Console.BackgroundColor = ProgramSettings.PanelBackColor;
 
             for (int i = Top; i < ProgramSettings.PanelDataHeight + Top; i++)
             {
@@ -55,8 +55,8 @@ namespace NewMidnightCommander
                 {
                     if (i == this.Selected && ((ProgramSettings.LeftPanelActive && this.LeftPanel) || (ProgramSettings.LeftPanelActive == false && this.LeftPanel == false)))
                     {
-                        Console.ForegroundColor = ProgramSettings.SelectedForeColor;
-                        Console.BackgroundColor = ProgramSettings.SelectedBackColor;
+                        Console.ForegroundColor = ProgramSettings.PanelSelectedForeColor;
+                        Console.BackgroundColor = ProgramSettings.PanelSelectedBackColor;
                     }
 
                     string subItem = this.Files[i][0];
@@ -71,8 +71,8 @@ namespace NewMidnightCommander
 
                     if (i == this.Selected)
                     {
-                        Console.ForegroundColor = ProgramSettings.ForeColor;
-                        Console.BackgroundColor = ProgramSettings.BackColor;
+                        Console.ForegroundColor = ProgramSettings.PanelForeColor;
+                        Console.BackgroundColor = ProgramSettings.PanelBackColor;
                     }
                 }
                 else
@@ -185,13 +185,13 @@ namespace NewMidnightCommander
         {
             if(ProgramSettings.LeftPanelActive) 
             {
-                ProgramSettings.LeftPanelPath = InitialPath;
+                ProgramSettings.LeftPanelPath = this.InitialPath;
             }
             else
             {
-                ProgramSettings.RightPanelPath = InitialPath;
+                ProgramSettings.RightPanelPath = this.InitialPath;
             }
-            this.Path = InitialPath;  
+            this.Path = this.InitialPath;  
         }
 
         // File Actions
@@ -227,11 +227,12 @@ namespace NewMidnightCommander
         private void MkDir()
         {
             Application.SaveLastWindow();
-            Application.window = new MkDir(Path);
+            Application.window = new MkDir(this.Path);
         }
 
         private void ChangeDrive()
         {
+            this.PageUp();
             Application.SaveLastWindow();
             Application.window = new ChangeDrive();
         }
@@ -240,9 +241,14 @@ namespace NewMidnightCommander
 
         private void FindItem(ConsoleKeyInfo info)
         {
-            findItem.Find(info);
-            this.Selected = findItem.selectedForFileManager(this.Selected);
-            this.Top = findItem.selectedForFileManager(this.Selected) - 22;
+            this.findItem.Find(info);
+            this.Selected = this.findItem.selectedForFileManager(this.Selected);
+
+            if(this.Selected > this.Top + 22 || this.Selected < this.Top)
+            {
+                this.Top = this.Selected - 22;
+            }
+            
             if (this.Top < 0) { this.Top = 0; }
         }
 
@@ -268,7 +274,7 @@ namespace NewMidnightCommander
 
         private bool IsSelectedItem()
         {
-            if(Selected != 0 || Selected == 0 && Path == InitialPath) { return true; }
+            if(this.Selected != 0 || this.Selected == 0 && this.Path == this.InitialPath) { return true; }
             return false;
         }
 
@@ -285,33 +291,33 @@ namespace NewMidnightCommander
 
         private void SetOtherPanelPath()
         {
-            if (LeftPanel) { ProgramSettings.LeftPanelPath = Path; }
-            else { ProgramSettings.RightPanelPath = Path; }
+            if (this.LeftPanel) { ProgramSettings.LeftPanelPath = this.Path; }
+            else { ProgramSettings.RightPanelPath = this.Path; }
         }
 
         private void CheckPath()
         {
-            if (LeftPanel) 
+            if (this.LeftPanel) 
             { 
-                if (Path != ProgramSettings.LeftPanelPath) 
-                { 
-                    Path = ProgramSettings.LeftPanelPath; 
-                    InitialPath = ProgramSettings.LeftPanelPath; 
+                if (this.Path != ProgramSettings.LeftPanelPath) 
+                {
+                    this.Path = ProgramSettings.LeftPanelPath;
+                    this.InitialPath = ProgramSettings.LeftPanelPath; 
                 } 
             }
             else 
             { 
-                if (Path != ProgramSettings.RightPanelPath) 
-                { 
-                    Path = ProgramSettings.RightPanelPath;
-                    InitialPath = ProgramSettings.RightPanelPath; 
+                if (this.Path != ProgramSettings.RightPanelPath) 
+                {
+                    this.Path = ProgramSettings.RightPanelPath;
+                    this.InitialPath = ProgramSettings.RightPanelPath; 
                 }
             }
         }
 
         private void SelectedCondition()
         {
-            if(Selected > this.Files.Count - 1) { Selected = this.Files.Count - 1; }
+            if(this.Selected > this.Files.Count - 1) { this.PageDown(); }
         }
     }
 }

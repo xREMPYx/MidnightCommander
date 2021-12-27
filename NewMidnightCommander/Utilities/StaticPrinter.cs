@@ -10,13 +10,14 @@ namespace NewMidnightCommander
     {
         // │ ┐ ┌ └ ┘ ├ ┤ ┬ ┴ ┼ ─
         public static void PrintTable()
-        {
-            Console.BackgroundColor = ProgramSettings.SelectedBackColor;
-            Console.ForegroundColor = ProgramSettings.ForeMenuColor;
+        {          
+            Console.ForegroundColor = ProgramSettings.MenuForeColor;
+            Console.BackgroundColor = ProgramSettings.MenuBackColor;
+
             Functions.Write(0, 0, PrintUpperMenu().PadRight(ProgramSettings.PanelWidth));
 
-            Console.ForegroundColor = ProgramSettings.ForeColor;
-            Console.BackgroundColor = ProgramSettings.BackColor;
+            Console.ForegroundColor = ProgramSettings.PanelForeColor;
+            Console.BackgroundColor = ProgramSettings.PanelBackColor;
           
             for (int y = 2; y < ProgramSettings.PanelHeight; y++)
             {
@@ -53,7 +54,7 @@ namespace NewMidnightCommander
             Functions.Write(ProgramSettings.PanelWidth - 1, 1, "┐"); 
             Functions.Write(ProgramSettings.PanelWidth - 1, ProgramSettings.PanelHeight - 1, "┘");
 
-            Console.ForegroundColor = ProgramSettings.TitleColor;
+            Console.ForegroundColor = ProgramSettings.PanelTitleBackColor;
             for (int i = 0; i < ProgramSettings.PanelWidth / 2 + 1; i += ProgramSettings.PanelWidth / 2)
             {
                 Functions.Write(1 + i, 3, String.Empty.PadRight(38));
@@ -84,7 +85,7 @@ namespace NewMidnightCommander
         private static string PrintUpperMenu()
         {
             string space = string.Empty.PadRight(8);
-            string menu = string.Empty.PadRight(8);
+            string menu = string.Empty.PadRight(5);
             menu += "Left" + space;
             menu += "File" + space;
             menu += "Command" + space;
@@ -108,19 +109,21 @@ namespace NewMidnightCommander
             }
 
             if(padRightTable > 0 && ProgramSettings.LeftPanelActive != true) 
-            { 
-                Console.BackgroundColor = ProgramSettings.SelectedBackColor; 
+            {                
+                Console.ForegroundColor = ProgramSettings.PanelSelectedForeColor;
+                Console.BackgroundColor = ProgramSettings.PanelSelectedBackColor;
             }
 
             if(padRightTable == 0 && ProgramSettings.LeftPanelActive)
-            { 
-                Console.BackgroundColor = ProgramSettings.SelectedBackColor; 
+            {             
+                Console.ForegroundColor = ProgramSettings.PanelSelectedForeColor;
+                Console.BackgroundColor = ProgramSettings.PanelSelectedBackColor;
             }
 
             Functions.Write(2 + padRightTable, 1, path);
 
-            Console.ForegroundColor = ProgramSettings.ForeColor;
-            Console.BackgroundColor = ProgramSettings.BackColor;
+            Console.ForegroundColor = ProgramSettings.PanelForeColor;
+            Console.BackgroundColor = ProgramSettings.PanelBackColor;
 
             Functions.Write(1 + padRightTable, 1, "─");
             Functions.Write(2 + path.Length + padRightTable, 1, "─".PadRight(57 - path.Length, '─'));

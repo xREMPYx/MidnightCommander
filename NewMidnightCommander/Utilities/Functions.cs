@@ -19,8 +19,8 @@ namespace NewMidnightCommander
             Console.ForegroundColor = ConsoleColor.White;
             Console.BackgroundColor = ConsoleColor.Black;
             Write(x, y, buttonNumber.ToString());
-            Console.BackgroundColor = ProgramSettings.SelectedBackColor;
-            Console.ForegroundColor = ConsoleColor.Black;
+            Console.BackgroundColor = ProgramSettings.ButtonBackColor;
+            Console.ForegroundColor = ProgramSettings.ButtonForeColor;
             Write(x + buttonNumber.ToString().Length, y, text.PadRight(6));
             Console.ResetColor();
         }
@@ -28,8 +28,8 @@ namespace NewMidnightCommander
         public static void ReadKeyError()
         {
             Console.SetCursorPosition(103, 30);
-            Console.BackgroundColor= ConsoleColor.Black;
             Console.ForegroundColor= ConsoleColor.Black;
+            Console.BackgroundColor = ConsoleColor.Black;
         }
 
         public static void TextAlert(string text)

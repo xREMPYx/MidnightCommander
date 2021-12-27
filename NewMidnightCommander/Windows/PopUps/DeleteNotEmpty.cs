@@ -28,7 +28,7 @@ namespace NewMidnightCommander
 
             Button OkButton = new Button((ProgramSettings.PanelWidth / 2) - (this.Width / 2) + 7, (ProgramSettings.PanelHeight / 2) + (this.Height / 2) - 1, "OK") 
             {
-                BackColor = ConsoleColor.DarkRed ,
+                BackColor = ConsoleColor.DarkRed,
                 SelectedColor = ConsoleColor.Gray
             };
 
@@ -52,19 +52,15 @@ namespace NewMidnightCommander
 
         private void OkPressed()
         {
-            try
-            {
-                Directory.Delete(this.SourcePath, true);
-            }
-            catch  { Functions.TextAlert("Error!"); }
+            try {  Directory.Delete(this.SourcePath, true); } catch { Functions.TextAlert("Error!"); }
             StaticPrinter.PrintTable();
-            Application.RenewWindow(1);           
+            Application.RenewWindow();           
         }
         
         private void CancelPressed()
         {
             StaticPrinter.PrintTable();
-            Application.RenewWindow(1);           
+            Application.RenewWindow();           
         }
     }
 }

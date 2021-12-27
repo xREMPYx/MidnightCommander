@@ -28,14 +28,14 @@ namespace NewMidnightCommander
 
         public override void Print(bool active)
         {
-            int Pad = 7;
+            int Pad = 14;
             for (int i = Top; i < 5 + Top; i++)
-            {
-                Pad += 7;
+            {             
                 Console.CursorVisible = false;
                 disks[i].PositionX = PositionX + Pad;
                 disks[i].PositionY = PositionY;
-                disks[i].Print(i == this.Selected);                
+                disks[i].Print(i == this.Selected);
+                Pad += 7;
             }                           
             Functions.ReadKeyError();
         }

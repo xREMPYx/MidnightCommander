@@ -31,6 +31,11 @@ namespace NewMidnightCommander
 
         public static string ItemSize(long itemSize)
         {
+            if (itemSize > 1099511627776)
+            {
+                Decimal FileSize = Decimal.Divide(itemSize, 1073741824);
+                return String.Format("{0:##}TB", FileSize);
+            }
             if (itemSize > 1073741824) 
             {
                 Decimal FileSize = Decimal.Divide(itemSize, 1073741824);

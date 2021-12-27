@@ -19,7 +19,7 @@ namespace NewMidnightCommander
             this.Width = 50;
             this.Title = "Copy";
             this.AdditionalText = "Copy:";
-            this.SecondAdditionalText = sourcePath;          
+            this.SecondAdditionalText = sourcePath;
             this.ForeColor = ConsoleColor.Black;
             this.BackColor = ConsoleColor.Gray;
             this.SourcePath = sourcePath;
@@ -43,7 +43,7 @@ namespace NewMidnightCommander
 
             this.component = container;
             this.textBox = textBox;
-            this.PrintBox();           
+            this.PrintBox();
         }
 
         // Button methods
@@ -60,13 +60,13 @@ namespace NewMidnightCommander
                 Functions.TextAlert("Already Exists!");
             }
             StaticPrinter.PrintTable();
-            Application.RenewWindow(1);           
+            Application.RenewWindow();
         }
         
         private void CancelPressed()
         {
             StaticPrinter.PrintTable();
-            Application.RenewWindow(1);           
+            Application.RenewWindow();
         }
 
         // Copy All function
@@ -91,8 +91,7 @@ namespace NewMidnightCommander
 
             foreach (DirectoryInfo diSourceSubDir in source.GetDirectories())
             {
-                DirectoryInfo nextTargetSubDir =
-                    target.CreateSubdirectory(diSourceSubDir.Name);
+                DirectoryInfo nextTargetSubDir = target.CreateSubdirectory(diSourceSubDir.Name);
                 CopyAll(diSourceSubDir, nextTargetSubDir);
             }
         }

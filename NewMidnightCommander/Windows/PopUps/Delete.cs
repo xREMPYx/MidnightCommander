@@ -53,19 +53,19 @@ namespace NewMidnightCommander
                 }
                 catch 
                 {
-                    Application.RenewWindow(1);
+                    Application.RenewWindow();
                     Application.window = new DeleteNotEmpty(this.SourcePath);
                     return;
                 }               
             }
             StaticPrinter.PrintTable();
-            Application.RenewWindow(1);           
+            Application.RenewWindow();           
         }
         
         private void CancelPressed()
         {
             StaticPrinter.PrintTable();
-            Application.RenewWindow(1);           
+            Application.RenewWindow();           
         }
     }
 }

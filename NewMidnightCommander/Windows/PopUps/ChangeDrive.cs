@@ -19,7 +19,7 @@ namespace NewMidnightCommander
             this.PositionX = (ProgramSettings.PanelWidth / 2) - (this.Width / 2) + 1;
             this.PositionY = (ProgramSettings.PanelHeight / 2) - (this.Height / 2) + 2;
       
-            this.ForeColor = ConsoleColor.Black;
+            this.ForeColor = ConsoleColor.Black;    
             this.BackColor = ConsoleColor.Gray;
 
             this.ShowAdditional = false;
