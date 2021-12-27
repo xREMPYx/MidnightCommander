@@ -17,10 +17,13 @@ namespace NewMidnightCommander
 
         private bool LeftPanel;
         private bool IsFindItemOn;
+        private bool IsMarkItemsOn;
+        private bool IsMarkItemsOnAfterF1;
 
         private List<string[]> Files;
 
         private FindItem findItem;
+        private MarkFiles markFiles;
 
         public Panel(bool leftPanel)
         {
@@ -53,27 +56,33 @@ namespace NewMidnightCommander
             {
                 if (i < this.Files.Count)
                 {
-                    if (i == this.Selected && ((ProgramSettings.LeftPanelActive && this.LeftPanel) || (ProgramSettings.LeftPanelActive == false && this.LeftPanel == false)))
-                    {
+                    if (((this.IsMarkItemsOn == false) || (this.IsMarkItemsOn == true) && (this.IsMarkItemsOnAfterF1 == true)) && i == this.Selected && ((ProgramSettings.LeftPanelActive && this.LeftPanel) || (ProgramSettings.LeftPanelActive == false && this.LeftPanel == false)))
+                    {                    
                         Console.ForegroundColor = ProgramSettings.PanelSelectedForeColor;
-                        Console.BackgroundColor = ProgramSettings.PanelSelectedBackColor;
                     }
+
+                    if (this.IsMarkItemsOn && IfNameIsEqual(this.Files[i][0], markFiles.MarkedFiles) && ((ProgramSettings.LeftPanelActive && this.LeftPanel) || (ProgramSettings.LeftPanelActive == false && this.LeftPanel == false)))
+                    {
+                        Console.ForegroundColor = ProgramSettings.PanelMarkForeSelected;
+                    }
+
+                    if (i == this.Selected && ((ProgramSettings.LeftPanelActive && this.LeftPanel) || (ProgramSettings.LeftPanelActive == false && this.LeftPanel == false))) { Console.BackgroundColor = ProgramSettings.PanelSelectedBackColor; }
 
                     string subItem = this.Files[i][0];
                     if (this.Files[i][0].Length > 35) { subItem = this.Files[i][0].Substring(0, 35); }
 
-                    Functions.Write(1 + this.PadRightPanel, i + 4 - Top, subItem.PadRight(38));
+                    Functions.Write(1 + this.PadRightPanel, i + 4 - Top, subItem.PadRight(38));          
+                    
+                    if (i == this.Selected) { Console.ForegroundColor = ProgramSettings.PanelSelectedForeColor; } 
+                    else { Console.ForegroundColor = ProgramSettings.PanelForeColor; }
+
                     Functions.Write(41 + this.PadRightPanel, i + 4 - Top, this.Files[i][1].PadRight(5));
                     Functions.Write(48 + this.PadRightPanel, i + 4 - Top, this.Files[i][2].PadRight(11));
                     Functions.Write(39 + this.PadRightPanel, i + 4 - Top, "│".PadRight(2));
                     Functions.Write(46 + this.PadRightPanel, i + 4 - Top, "│".PadRight(2));
 
-
-                    if (i == this.Selected)
-                    {
-                        Console.ForegroundColor = ProgramSettings.PanelForeColor;
-                        Console.BackgroundColor = ProgramSettings.PanelBackColor;
-                    }
+                    Console.ForegroundColor = ProgramSettings.PanelForeColor;
+                    Console.BackgroundColor = ProgramSettings.PanelBackColor;
                 }
                 else
                 {
@@ -108,6 +117,7 @@ namespace NewMidnightCommander
             else if (info.Key == ConsoleKey.PageDown) { PageDown(); }
             else if (info.Key == ConsoleKey.Tab) { SwitchPanel(); }           
             else if (info.Key == ConsoleKey.Home) { Home(); }           
+            else if (info.Key == ConsoleKey.F1) { SetMarkFilesBools(); }
             else if (info.Key == ConsoleKey.F7) { MkDir(); }
             else if (info.Key == ConsoleKey.F9) { ChangeDrive(); }
             else if (info.Key == ConsoleKey.F5 && IsSelectedItem()) { Copy(); }
@@ -115,8 +125,10 @@ namespace NewMidnightCommander
             else if (info.Key == ConsoleKey.F8 && IsSelectedItem()) { Delete(); }
             else if (info.Key == ConsoleKey.F && IsFindItemOn == false) { this.findItem = new FindItem(this.Files); IsFindItemOn = true; }
 
-            if (ResetFindItem(info)) { IsFindItemOn = false; }
-            if (IsFindItemOn) { FindItem(info); }
+            if (Reset(info,1)) { this.IsFindItemOn = false; }
+            if (Reset(info,0)) { ResetMark(); }
+            if (this.IsFindItemOn) { FindItem(info); }
+            if (this.IsMarkItemsOn && this.IsMarkItemsOnAfterF1 == false) { MarkFiles(); }
         }
 
         // Move Actions
@@ -209,13 +221,28 @@ namespace NewMidnightCommander
             }
 
             Application.SaveLastWindow();
-            Application.window = new Copy(this.Path + this.Files[Selected][0].Remove(0,1).ToString(), destinationPath + this.Files[Selected][0].Remove(0, 1).ToString());
+            if (this.IsMarkItemsOn)
+            {
+                Application.window = new CopyFiles(this.Path,this.markFiles.MarkedFiles, destinationPath.ToString());
+            }
+            else
+            {
+                Application.window = new Copy(this.Path + this.Files[this.Selected][0].Remove(0, 1).ToString(), destinationPath + this.Files[this.Selected][0].Remove(0, 1).ToString());
+            }            
         }
 
         private void Delete()
         {
             Application.SaveLastWindow();
-            Application.window = new Delete(this.Path + this.Files[Selected][0].Remove(0, 1).ToString());
+
+            if (this.IsMarkItemsOn)
+            {
+                Application.window = new DeleteFiles(this.Path, this.markFiles.MarkedFiles);
+            }
+            else
+            {
+                Application.window = new Delete(this.Path + this.Files[this.Selected][0].Remove(0, 1).ToString());
+            }
         }
 
         private void RenMov()
@@ -239,6 +266,27 @@ namespace NewMidnightCommander
 
         // Other Actions
 
+        private void SetMarkFilesBools()
+        {
+            if( this.IsMarkItemsOn == false && this.IsMarkItemsOnAfterF1 == false && this.IsSelectedItem()) 
+            {
+                this.IsMarkItemsOn = true; this.IsMarkItemsOnAfterF1 = false;
+                this.markFiles = new MarkFiles(this.Files);
+                this.markFiles.startFileSelected = this.Selected;
+            }
+            else if( this.IsMarkItemsOn == true && this.IsMarkItemsOnAfterF1 == false) { this.IsMarkItemsOn = true; this.IsMarkItemsOnAfterF1 = true; }
+            else if( this.IsMarkItemsOn == true && this.IsMarkItemsOnAfterF1 == true) { this.IsMarkItemsOn = false; this.IsMarkItemsOnAfterF1 = false; }
+        }
+
+        private void MarkFiles()
+        {
+            if (IsSelectedItem())
+            {
+                this.markFiles.lastFileSelected = this.Selected;
+            }        
+            this.markFiles.AddFiles();
+        }
+
         private void FindItem(ConsoleKeyInfo info)
         {
             this.findItem.Find(info);
@@ -254,13 +302,17 @@ namespace NewMidnightCommander
 
         // Others
 
-        private bool ResetFindItem(ConsoleKeyInfo info)
+        private bool Reset(ConsoleKeyInfo info, int type)
         {
-            if (info.Key == ConsoleKey.UpArrow) { return true; }
-            else if (info.Key == ConsoleKey.DownArrow) { return true; }
-            else if (info.Key == ConsoleKey.Enter) { return true; }
-            else if (info.Key == ConsoleKey.PageUp) { return true; }
-            else if (info.Key == ConsoleKey.PageDown) { return true; }
+            if(type == 1)
+            {
+                if (info.Key == ConsoleKey.UpArrow) { return true; }
+                else if (info.Key == ConsoleKey.DownArrow) { return true; }
+                else if (info.Key == ConsoleKey.PageUp) { return true; }
+                else if (info.Key == ConsoleKey.PageDown) { return true; }
+            }
+
+            else if (info.Key == ConsoleKey.Enter) { return true; }          
             else if (info.Key == ConsoleKey.Tab) { return true; }                   
             else if (info.Key == ConsoleKey.F3) { return true; }
             else if (info.Key == ConsoleKey.F4) { return true; }
@@ -269,6 +321,7 @@ namespace NewMidnightCommander
             else if (info.Key == ConsoleKey.F7) { return true; }
             else if (info.Key == ConsoleKey.F8) { return true; }
             else if (info.Key == ConsoleKey.F9) { return true; }
+
             return false;
         }
 
@@ -318,6 +371,23 @@ namespace NewMidnightCommander
         private void SelectedCondition()
         {
             if(this.Selected > this.Files.Count - 1) { this.PageDown(); }
+        }
+
+        // Mark utilites
+
+        private void ResetMark()
+        {
+            IsMarkItemsOn = false;
+            IsMarkItemsOnAfterF1 = false;
+        }
+
+        private bool IfNameIsEqual(string fileName, List<string> markedFiles)
+        {
+            for (int i = 0; i < markedFiles.Count; i++)
+            {
+                if (fileName.Trim(' ').Trim('\\') == markedFiles[i].ToString()) { return true; }
+            }
+            return false;
         }
     }
 }

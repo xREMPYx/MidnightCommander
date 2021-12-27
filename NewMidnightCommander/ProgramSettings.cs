@@ -25,6 +25,7 @@ namespace NewMidnightCommander
         public static ConsoleColor PanelSelectedForeColor = ConsoleColor.White;
         public static ConsoleColor PanelSelectedBackColor = ConsoleColor.Blue;
         public static ConsoleColor PanelTitleBackColor = ConsoleColor.DarkYellow;
+        public static ConsoleColor PanelMarkForeSelected = ConsoleColor.DarkYellow;
 
         public static ConsoleColor BoxForeColor = ConsoleColor.Black;
         public static ConsoleColor BoxBackColor = ConsoleColor.Gray; 
