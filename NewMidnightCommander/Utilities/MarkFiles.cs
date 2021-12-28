@@ -41,7 +41,7 @@ namespace NewMidnightCommander
             this.MarkedFileNames = new();
             for (int i = startFileSel; i < lastFileSel + 1; i++)
             {
-                this.MarkedFileNames.Add(Files[i]);
+                this.MarkedFileNames.Add(this.Files[i]);
             }
         }
     }

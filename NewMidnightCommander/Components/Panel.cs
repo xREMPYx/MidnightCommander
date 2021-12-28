@@ -213,10 +213,12 @@ namespace NewMidnightCommander
 
         private void Edit()
         {
-            if (!this.Files[this.Selected][0].EndsWith(".txt") && IsMarkItemsOn) { return; }
-
+            if (!this.Files[this.Selected][0].EndsWith(".txt") || this.IsMarkItemsOn) 
+            {
+                return;
+            }
             Application.SaveLastWindow();
-            Application.window = new TextFileEditorWindow(this.Path + '\\' + this.Files[this.Selected][0].Remove(0,1));
+            Application.window = new TextFileEditorWindow(this.Path + '\\' + this.Files[this.Selected][0].Remove(0, 1));
         }
 
         private void Copy()

@@ -95,13 +95,13 @@ namespace NewMidnightCommander
             else if(fileCount > 0) { Functions.TextAlert($"{fileCount} {file} cannot be deleted!"); }
 
             StaticPrinter.PrintTable();
-            Application.RenewWindow();           
+            Application.RenewWindow(1);           
         }
         
         private void CancelPressed()
         {
             StaticPrinter.PrintTable();
-            Application.RenewWindow();           
+            Application.RenewWindow(1);           
         }
     }
 }

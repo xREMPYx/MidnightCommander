@@ -60,7 +60,7 @@ namespace NewMidnightCommander
                 }
 
                 StaticPrinter.PrintTable();
-                Application.RenewWindow();
+                Application.RenewWindow(1);
             }
             else
             {

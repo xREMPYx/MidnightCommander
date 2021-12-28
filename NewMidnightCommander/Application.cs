@@ -10,7 +10,7 @@ namespace NewMidnightCommander
     {
         public static Window window;
 
-        public static Window lastWindow;
+        public static List<Window> lastWindows = new List<Window>();
 
         public static void Print()
         {
@@ -24,12 +24,12 @@ namespace NewMidnightCommander
 
         public static void SaveLastWindow()
         {
-            Application.lastWindow = Application.window;
+            Application.lastWindows.Add(Application.window);
         }
 
-        public static void RenewWindow()
+        public static void RenewWindow(int index)
         {
-            Application.window = Application.lastWindow;
+            Application.window = Application.lastWindows[Application.lastWindows.Count - index];
         }
     }
 }

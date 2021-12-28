@@ -6,22 +6,24 @@ using System.Threading.Tasks;
 
 namespace NewMidnightCommander
 {
-    public class DeleteNotEmpty : PopUpWindow
-    {
-        public string SourcePath { get; set; }
+    public class QuitSaveAlert : PopUpWindow
+    {        
+        private string Path;
 
-        public DeleteNotEmpty(string sourcePath)
+        private List<string> TextList;
+        public QuitSaveAlert(string path, List<string> textList)
         {
             this.Height = 5;
             this.Width = 50;
             this.Title = "Delete Alert";
-            this.AdditionalText = "Dir is not empty!".PadLeft(this.Width/2 + 8);
-            this.SecondAdditionalText = "Are you sure you want to delete it?".PadLeft(this.Width - 8);
+            this.AdditionalText = "Your text is not saved!".PadLeft(this.Width/2 + 10);
+            this.SecondAdditionalText = "Do you want to save it?".PadLeft(this.Width/2 + 10);
             this.ForeColor = ConsoleColor.Black;
             this.BackColor = ConsoleColor.DarkRed;
             this.TitleColor = ConsoleColor.Black;
             this.ItemBackColor = ConsoleColor.DarkRed;
-            this.SourcePath = sourcePath;
+            this.TextList = textList;
+            this.Path = path;
             this.ShowAdditional = true;
 
             Container container = new Container();
@@ -52,13 +54,12 @@ namespace NewMidnightCommander
 
         private void OkPressed()
         {
-            try 
-            { 
-                Directory.Delete(this.SourcePath, true); 
-            } 
-            catch 
-            { 
-                Functions.TextAlert("Error!");
+            using (StreamWriter streamWriter = new StreamWriter(this.Path))
+            {
+                foreach (string line in this.TextList)
+                {
+                    streamWriter.WriteLine(line);
+                }
             }
 
             StaticPrinter.PrintTable();
@@ -68,7 +69,7 @@ namespace NewMidnightCommander
         private void CancelPressed()
         {
             StaticPrinter.PrintTable();
-            Application.RenewWindow(1);           
+            Application.RenewWindow(1);
         }
     }
 }

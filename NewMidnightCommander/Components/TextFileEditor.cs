@@ -16,6 +16,7 @@ namespace NewMidnightCommander
         private int PositionYTop;
 
         private List<string> TextList;
+        private List<string> InitialTextList;
 
         public TextFileEditor(string path)
         {
@@ -23,7 +24,8 @@ namespace NewMidnightCommander
             this.TextList = new();         
             this.PositionX = 0;
             this.PositionY = 0;
-            this.LoadText();
+            this.TextList = this.InitializeTextList();
+            this.InitialTextList = this.InitializeTextList();
         }
    
         public void HandleKey(ConsoleKeyInfo info)
@@ -34,6 +36,8 @@ namespace NewMidnightCommander
             else if (info.Key == ConsoleKey.RightArrow) { MoveRight(); }
             else if (info.Key == ConsoleKey.Backspace) { RemoveChar(); }
             else if (info.Key == ConsoleKey.Enter) { Enter(); }
+            else if (info.Key == ConsoleKey.F2) { Save(); }
+            else if (info.Key == ConsoleKey.F10) { Quit(); }
             else { AddChar(info); }
 
             Console.CursorVisible = false;
@@ -69,14 +73,15 @@ namespace NewMidnightCommander
             return line.Substring(this.PositionXTop, subNumber);
         }
 
-        private void LoadText()
+        private List<string> InitializeTextList()
         {
-            this.TextList = File.ReadAllLines(this.Path).ToList();
+            List<string> textList = File.ReadAllLines(this.Path).ToList();
 
-            foreach (string line in this.TextList)
+            foreach (string line in textList)
             {
                 if(line == string.Empty) { this.TextList.Remove(line); }
             }
+            return textList;
         }
 
         // Move Actions
@@ -87,7 +92,11 @@ namespace NewMidnightCommander
             { 
                 this.PositionY--; 
             }
-            if(this.PositionX > this.TextList[this.PositionY].Length)
+            if(this.PositionY == this.PositionYTop - 1)
+            {
+                this.PositionYTop--;
+            }
+            if(this.PositionX > this.TextList[this.PositionY].Length - 1)
             {
                 this.PositionX = this.TextList[this.PositionY].Length;
             }
@@ -95,11 +104,15 @@ namespace NewMidnightCommander
 
         private void MoveDown()
         {
-            if (this.PositionY < this.TextList.Count - 1) 
+            if(this.PositionY < this.TextList.Count - 1) 
             {
                 this.PositionY++; 
             }
-            if (this.PositionX > this.TextList[this.PositionY].Length)
+            if(this.PositionY > this.PositionYTop + ProgramSettings.PanelHeight - 2)
+            {
+                this.PositionYTop++;
+            }
+            if(this.PositionX > this.TextList[this.PositionY].Length)
             {
                 this.PositionX = this.TextList[this.PositionY].Length;
             }
@@ -107,11 +120,11 @@ namespace NewMidnightCommander
 
         private void MoveLeft()
         {
-            if (this.PositionX > 0)
+            if(this.PositionX > 0)
             {
                 this.PositionX--; 
             }
-            if (this.PositionX == this.PositionXTop - 1)
+            if(this.PositionX == this.PositionXTop - 1)
             {
                 this.PositionXTop--; 
             }
@@ -119,11 +132,11 @@ namespace NewMidnightCommander
 
         private void MoveRight()
         {
-            if (this.PositionX < this.TextList[this.PositionY].Length) 
+            if(this.PositionX < this.TextList[this.PositionY].Length) 
             { 
                 this.PositionX++;
             }
-            if (this.PositionX == this.PositionXTop + ProgramSettings.PanelWidth)
+            if(this.PositionX == this.PositionXTop + ProgramSettings.PanelWidth)
             {
                 this.PositionXTop++; 
             }
@@ -156,11 +169,11 @@ namespace NewMidnightCommander
                 if(this.TextList[this.PositionY].Length == 0)
                 {
                     this.TextList.RemoveAt(this.PositionY);
-                    this.PositionY--;
+                    this.MoveUp();
                     this.PositionX = this.TextList[this.PositionY].Length;
                 }
             }
-            else if (this.PositionX == 0 && this.PositionY == 0 && this.TextList.Count > 0 && this.TextList[this.PositionY].Length < 1)
+            else if (this.PositionX == 0 && this.PositionY == 0 && this.TextList.Count > 1 && this.TextList[this.PositionY].Length < 1)
             {
                 this.TextList.RemoveAt(this.PositionY);
             }       
@@ -186,7 +199,33 @@ namespace NewMidnightCommander
             }
 
             this.PositionX = 0;
-            this.PositionY++;
+            this.PositionXTop = 0;
+            this.MoveDown();
+        }
+
+        private void Save()
+        {
+            using (StreamWriter streamWriter = new StreamWriter(this.Path))
+            {
+                foreach (string line in this.TextList)
+                {
+                    streamWriter.WriteLine(line);
+                }
+            }
+            this.InitialTextList = this.TextList;
+        }
+
+        private void Quit()
+        {
+            if(!Enumerable.SequenceEqual(this.TextList, this.InitialTextList))
+            {
+                Application.window = new QuitSaveAlert(this.Path, this.TextList);
+            }
+            else
+            {
+                StaticPrinter.PrintTable();
+                Application.RenewWindow(1);
+            }
         }
     }
 }

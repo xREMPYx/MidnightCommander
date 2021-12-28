@@ -84,13 +84,13 @@ namespace NewMidnightCommander
             }
 
             StaticPrinter.PrintTable();
-            Application.RenewWindow();           
+            Application.RenewWindow(1);           
         }
         
         private void CancelPressed()
         {
             StaticPrinter.PrintTable();
-            Application.RenewWindow();           
+            Application.RenewWindow(1);           
         }
 
         // Others
