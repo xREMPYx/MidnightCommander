@@ -8,7 +8,6 @@ namespace NewMidnightCommander
 {
     public static class StaticPrinter
     {
-        // │ ┐ ┌ └ ┘ ├ ┤ ┬ ┴ ┼ ─
         public static void PrintTable()
         {          
             Console.ForegroundColor = ProgramSettings.MenuForeColor;
@@ -70,8 +69,8 @@ namespace NewMidnightCommander
 
         private static void PrintButtons()
         {
-            Functions.Button(0, ProgramSettings.PanelHeight, "Help", 1);
-            Functions.Button(12, ProgramSettings.PanelHeight, "Menu", 2);
+            Functions.Button(0, ProgramSettings.PanelHeight, "Mark", 1);
+            Functions.Button(12, ProgramSettings.PanelHeight, "MkFile", 2);
             Functions.Button(24, ProgramSettings.PanelHeight, "View", 3);
             Functions.Button(36, ProgramSettings.PanelHeight, "Edit", 4);
             Functions.Button(48, ProgramSettings.PanelHeight, "Copy", 5);

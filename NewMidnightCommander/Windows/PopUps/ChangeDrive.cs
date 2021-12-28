@@ -24,7 +24,9 @@ namespace NewMidnightCommander
 
             this.ShowAdditional = false;
 
-            ContainerChangeDrive containerChangeDrive = new ContainerChangeDrive(PositionX,PositionY);     
+            DriveStatus.allDrives = DriveInfo.GetDrives();
+
+            ContainerChangeDrive containerChangeDrive = new ContainerChangeDrive(this.PositionX, this.PositionY);     
 
             this.component = containerChangeDrive;
 

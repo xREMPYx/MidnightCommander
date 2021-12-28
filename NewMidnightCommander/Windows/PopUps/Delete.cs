@@ -8,18 +8,18 @@ namespace NewMidnightCommander
 {
     public class Delete : PopUpWindow
     {
-        public string SourcePath { get; set; }
+        public string SourceItemPath { get; set; }
 
-        public Delete(string sourcePath)
+        public Delete(string sourceItemPath)
         {
             this.Height = 5;
             this.Width = 50;
             this.Title = "Delete";
             this.AdditionalText = "Delete:";
-            this.SecondAdditionalText = sourcePath;
+            this.SecondAdditionalText = sourceItemPath;
             this.ForeColor = ConsoleColor.Black;
             this.BackColor = ConsoleColor.Gray;
-            this.SourcePath = sourcePath;
+            this.SourceItemPath = sourceItemPath;
             this.ShowAdditional = true;
 
             Container container = new Container();
@@ -29,43 +29,74 @@ namespace NewMidnightCommander
 
             OkButton.EnterClick += OkPressed;
             CancelButton.EnterClick += CancelPressed;
-       
+
             container.components.Add(OkButton);
             container.components.Add(CancelButton);
 
             this.component = container;
-            this.PrintBox();           
+            this.PrintBox();
         }
 
         // Button methods
 
         private void OkPressed()
         {
-            try
+            if (Directory.Exists(this.SourceItemPath))
             {
-                File.Delete(this.SourcePath);
+                if (IsDirectoryEmpty())
+                {
+                    Application.window = new DeleteNotEmpty(this.SourceItemPath);
+                    return;
+                }
+                else
+                {
+                    try
+                    {
+                        Directory.Delete(this.SourceItemPath);
+                    }
+                    catch
+                    {
+                        Functions.TextAlert("Directory cannot be deleted!");
+                    }
+                }
             }
-            catch 
+
+            else if (File.Exists(this.SourceItemPath))
             {
                 try
                 {
-                    Directory.Delete(this.SourcePath);
+                    File.Delete(this.SourceItemPath);
                 }
-                catch 
+                catch
                 {
-                    Application.RenewWindow();
-                    Application.window = new DeleteNotEmpty(this.SourcePath);
-                    return;
-                }               
+                    Functions.TextAlert("File cannot be deleted!");
+                }
+            }
+            else
+            {
+                Functions.TextAlert("Already Exists!");
             }
             StaticPrinter.PrintTable();
-            Application.RenewWindow();           
+            Application.RenewWindow();
         }
-        
+           
         private void CancelPressed()
         {
             StaticPrinter.PrintTable();
             Application.RenewWindow();           
+        }
+
+        // Others
+
+        private bool IsDirectoryEmpty()
+        {
+            if (Directory.Exists(this.SourceItemPath))
+            {
+                DirectoryInfo dirInfo = new DirectoryInfo(this.SourceItemPath);
+                if (dirInfo.GetFiles().Length > 0) { return true; }
+                if (dirInfo.GetDirectories().Length > 0) { return true; }
+            }
+            return false;
         }
     }
 }

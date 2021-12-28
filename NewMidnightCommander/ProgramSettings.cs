@@ -32,6 +32,9 @@ namespace NewMidnightCommander
         public static ConsoleColor BoxSelectedColor = ConsoleColor.DarkRed;
         public static ConsoleColor BoxTitleColor = ConsoleColor.Blue;
 
+        public static ConsoleColor TextEditorForeColor = ConsoleColor.White;
+        public static ConsoleColor TextEditorBackColor = ConsoleColor.DarkBlue;
+
         public static string LeftPanelPath = DriveStatus.InitialDrives()[0];
         public static string RightPanelPath = DriveStatus.InitialDrives()[1];
         public static bool LeftPanelActive = true;

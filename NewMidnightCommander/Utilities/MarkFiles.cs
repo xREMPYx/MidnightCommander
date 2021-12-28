@@ -9,7 +9,7 @@ namespace NewMidnightCommander
     internal class MarkFiles
     {
         public List<string> Files { get; set; }
-        public List<string> MarkedFiles { get; set; }
+        public List<string> MarkedFileNames { get; set; }
         public int startFileSelected { get; set; }
         public int lastFileSelected { get; set; }
 
@@ -28,20 +28,20 @@ namespace NewMidnightCommander
             int startFileSel;
             int lastFileSel;
 
-            if(lastFileSelected >= startFileSelected) 
+            if(this.lastFileSelected >= this.startFileSelected) 
             {
-                startFileSel = startFileSelected;
-                lastFileSel = lastFileSelected;
+                startFileSel = this.startFileSelected;
+                lastFileSel = this.lastFileSelected;
             }
             else
             {
-                startFileSel = lastFileSelected;
-                lastFileSel = startFileSelected;
+                startFileSel = this.lastFileSelected;
+                lastFileSel = this.startFileSelected;
             }
-            MarkedFiles = new();
+            this.MarkedFileNames = new();
             for (int i = startFileSel; i < lastFileSel + 1; i++)
             {
-                MarkedFiles.Add(Files[i]);
+                this.MarkedFileNames.Add(Files[i]);
             }
         }
     }

@@ -52,7 +52,15 @@ namespace NewMidnightCommander
 
         private void OkPressed()
         {
-            try {  Directory.Delete(this.SourcePath, true); } catch { Functions.TextAlert("Error!"); }
+            try 
+            { 
+                Directory.Delete(this.SourcePath, true); 
+            } 
+            catch 
+            { 
+                Functions.TextAlert("Error!");
+            }
+
             StaticPrinter.PrintTable();
             Application.RenewWindow();           
         }

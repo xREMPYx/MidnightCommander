@@ -37,21 +37,21 @@ namespace NewMidnightCommander
 
             Console.BackgroundColor = ProgramSettings.BoxBackColor;
 
-            Functions.Write(PositionX, PositionY, Title);
+            Functions.Write(this.PositionX, this.PositionY, this.Title);
 
             Console.BackgroundColor = ProgramSettings.BoxTitleColor;
             Console.ForegroundColor = ProgramSettings.BoxForeColor;
 
             string text = Text;
-            if(Text.Length > 48) 
+            if(this.Text.Length > 48) 
             {
-                text = text.Substring(Text.Length - 48, 48); 
+                text = text.Substring(this.Text.Length - 48, 48); 
             }
-            Functions.Write(PositionX, PositionY + 1, text.PadRight(49));
+            Functions.Write(this.PositionX, this.PositionY + 1, text.PadRight(49));
 
             if (active)
             { 
-                Console.SetCursorPosition(PositionX + text.Length, PositionY + 1); 
+                Console.SetCursorPosition(this.PositionX + text.Length, this.PositionY + 1); 
             }
             else 
             {
@@ -62,21 +62,21 @@ namespace NewMidnightCommander
         public void HandleKey(ConsoleKeyInfo info)
         {
             if (info.Key == ConsoleKey.Backspace) { RemoveChar(); }
-            else if (info.Key != ConsoleKey.Tab){ AddChar(info); }
+            else if (info.Key != ConsoleKey.Tab && info.Key != ConsoleKey.Enter) { AddChar(info); }
         }
 
         // Text Actions
 
         private void AddChar(ConsoleKeyInfo info)
         {
-            Text += info.KeyChar.ToString();
+            this.Text += info.KeyChar.ToString();
         }
 
         private void RemoveChar()
         {
-            if (Text.Length > 0)
+            if (this.Text.Length > 0)
             {
-                Text = Text.Remove(Text.Length - 1);
+                this.Text = this.Text.Remove(this.Text.Length - 1);
             }
         }
     }

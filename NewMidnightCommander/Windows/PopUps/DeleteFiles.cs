@@ -8,10 +8,11 @@ namespace NewMidnightCommander
 {
     public class DeleteFiles : PopUpWindow
     {
-        private string Path;
-        private List<string> SourcePaths;
+        private string SourcePath;
 
-        public DeleteFiles(string path, List<string> sourcePaths)
+        private List<string> FileNames;
+
+        public DeleteFiles(string path, List<string> fileNames)
         {
             this.Height = 5;
             this.Width = 50;
@@ -20,8 +21,8 @@ namespace NewMidnightCommander
             this.SecondAdditionalText = "*** Selected Files ***";
             this.ForeColor = ConsoleColor.Black;
             this.BackColor = ConsoleColor.Gray;
-            this.SourcePaths = sourcePaths;
-            this.Path = path;
+            this.FileNames = fileNames;
+            this.SourcePath = path;
             this.ShowAdditional = true;
 
             Container container = new Container();
@@ -43,29 +44,45 @@ namespace NewMidnightCommander
 
         private void OkPressed()
         {
-            try
+            foreach (string fileName in this.FileNames)
             {
-                foreach (string path in this.SourcePaths)
+                if (Directory.Exists(this.SourcePath + '\\' + fileName))
                 {
-                    File.Delete(this.Path + '\\' + path);
-                }               
-            }
-            catch 
-            {
-                try
-                {
-                    foreach (string path in this.SourcePaths)
+                    if (IsDirectoryEmpty()) 
                     {
-                        Directory.Delete(this.Path + '\\' + path);
+                        Application.window = new DeleteFilesNotEmpty(this.SourcePath, this.FileNames);
+                        return;
+                    }
+                    else
+                    {
+                        try
+                        {
+                            Directory.Delete(this.SourcePath + '\\' + fileName);
+                        }
+                        catch
+                        {
+                            Functions.TextAlert("Directory cannot be deleted!");
+                        }
                     }
                 }
-                catch 
+
+                else if (File.Exists(this.SourcePath + '\\' + fileName))
                 {
-                    Application.RenewWindow();
-                    Application.window = new DeleteFilesNotEmpty(this.Path, this.SourcePaths);
-                    return;
-                }               
+                    try
+                    {
+                        File.Delete(this.SourcePath + '\\' + fileName);
+                    }
+                    catch
+                    {
+                        Functions.TextAlert("File cannot be deleted!");
+                    }
+                }
+                else
+                {
+                    Functions.TextAlert("Already Exists!");
+                }
             }
+
             StaticPrinter.PrintTable();
             Application.RenewWindow();           
         }
@@ -74,6 +91,22 @@ namespace NewMidnightCommander
         {
             StaticPrinter.PrintTable();
             Application.RenewWindow();           
+        }
+
+        // Others
+
+        private bool IsDirectoryEmpty()
+        {
+            foreach (string fileName in this.FileNames)
+            {
+                if(Directory.Exists(this.SourcePath + '\\' + fileName))
+                {
+                    DirectoryInfo dirInfo = new DirectoryInfo(this.SourcePath + '\\' + fileName);
+                    if (dirInfo.GetFiles().Length > 0) { return true; }
+                    if (dirInfo.GetDirectories().Length > 0) { return true; }
+                }                
+            }
+            return false;
         }
     }
 }

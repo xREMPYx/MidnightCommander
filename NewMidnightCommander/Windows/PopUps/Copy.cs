@@ -50,10 +50,27 @@ namespace NewMidnightCommander
 
         private void OkPressed()
         {
-            if (!Directory.Exists(this.textBox.Text) && !File.Exists(this.textBox.Text))
+            if (Directory.Exists(this.SourcePath))
             {
-                try { File.Copy(this.SourcePath, this.textBox.Text); }
-                catch { try { this.CopyDirectory(this.SourcePath, this.textBox.Text); } catch { Functions.TextAlert("Error!"); } }
+                try 
+                { 
+                    this.CopyDirectory(this.SourcePath, this.textBox.Text); 
+                } 
+                catch 
+                { 
+                    Functions.TextAlert("Directory canot be coppied!");
+                } 
+            }
+            else if (File.Exists(this.SourcePath))
+            {
+                try
+                {
+                    File.Copy(this.SourcePath, this.textBox.Text);
+                }
+                catch 
+                {
+                    Functions.TextAlert("File canot be coppied!");
+                }                
             }
             else
             {

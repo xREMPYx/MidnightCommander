@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace NewMidnightCommander
 {
-    public class MkDir : PopUpWindow
+    public class MkFile : PopUpWindow
     {
         private TextBox textBox;
 
-        public MkDir(string path)
+        public MkFile(string path)
         {
             this.Height = 5;
             this.Width = 50;
-            this.Title = "MkDir";
+            this.Title = "MkFile";
             this.ForeColor = ConsoleColor.Black;
             this.BackColor = ConsoleColor.Gray;
             this.ShowAdditional = false;
@@ -44,11 +44,11 @@ namespace NewMidnightCommander
         private void OkPressed()
         {
             try 
-            { 
-                Directory.CreateDirectory(this.textBox.Text); 
+            {
+                var file = File.Create(this.textBox.Text); file.Close(); 
             } 
             catch 
-            {
+            { 
                 Functions.TextAlert("Error!");
             }
 

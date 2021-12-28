@@ -24,12 +24,12 @@ namespace NewMidnightCommander
 
         public static void SaveLastWindow()
         {
-            lastWindow = Application.window;
+            Application.lastWindow = Application.window;
         }
 
         public static void RenewWindow()
         {
-            Application.window = lastWindow;
+            Application.window = Application.lastWindow;
         }
     }
 }

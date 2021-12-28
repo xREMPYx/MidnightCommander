@@ -30,7 +30,7 @@ namespace NewMidnightCommander
         {
             switch (info.Key)
             {
-                case ConsoleKey.Enter: EnterClick(); break;
+                case ConsoleKey.Enter: this.EnterClick(); break;
             }
         }
 
@@ -48,7 +48,7 @@ namespace NewMidnightCommander
 
         private void EnterPressed()
         {
-            if (drive.IsReady)
+            if (this.drive.IsReady)
             {
                 if (ProgramSettings.LeftPanelActive)
                 {
@@ -58,6 +58,7 @@ namespace NewMidnightCommander
                 {
                     ProgramSettings.RightPanelPath = this.Name;
                 }
+
                 StaticPrinter.PrintTable();
                 Application.RenewWindow();
             }

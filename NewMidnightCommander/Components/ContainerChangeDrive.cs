@@ -22,7 +22,7 @@ namespace NewMidnightCommander
             foreach (DriveInfo drive in DriveStatus.allDrives)
             {
                 Disk disk = new Disk(drive);
-                disks.Add(disk);
+                this.disks.Add(disk);
             }
         }
 
@@ -32,11 +32,12 @@ namespace NewMidnightCommander
             for (int i = Top; i < 5 + Top; i++)
             {             
                 Console.CursorVisible = false;
-                disks[i].PositionX = PositionX + Pad;
-                disks[i].PositionY = PositionY;
-                disks[i].Print(i == this.Selected);
+                this.disks[i].PositionX = this.PositionX + Pad;
+                this.disks[i].PositionY = this.PositionY;
+                this.disks[i].Print(i == this.Selected);
                 Pad += 7;
-            }                           
+            }                  
+            
             Functions.ReadKeyError();
         }
 
@@ -47,7 +48,7 @@ namespace NewMidnightCommander
             if (info.Key == ConsoleKey.Tab)
             {
                 this.Selected = (this.Selected + 1) % this.disks.Count;
-                if (Selected > 4) { Top++; } else { Top = 0; }
+                if (this.Selected > 4) { this.Top++; } else { this.Top = 0; }
             }
         }
     }

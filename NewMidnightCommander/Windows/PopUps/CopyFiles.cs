@@ -13,9 +13,9 @@ namespace NewMidnightCommander
 
         private TextBox textBox;
 
-        private List<string> SourcePaths;
+        private List<string> FileNames;
 
-        public CopyFiles(string path, List<string> sourcePaths, string destinationPath)
+        public CopyFiles(string path, List<string> fileNames, string destinationPath)
         {
             this.Height = 8;
             this.Width = 50;
@@ -25,7 +25,7 @@ namespace NewMidnightCommander
             this.ForeColor = ConsoleColor.Black;
             this.BackColor = ConsoleColor.Gray;
             this.SourcePath = path;
-            this.SourcePaths = sourcePaths;
+            this.FileNames = fileNames;
             this.DestinationPath = destinationPath;
             this.ShowAdditional = true;
 
@@ -52,29 +52,50 @@ namespace NewMidnightCommander
         // Button methods
 
         private void OkPressed()
-        {           
-            try
+        {
+            int directoryCount = 0;
+            int fileCount = 0;
+
+            string dir = "directory";
+            string file = "file";
+
+            foreach (string fileName in this.FileNames)
             {
-                foreach (string path in this.SourcePaths)
+                if (Directory.Exists(this.SourcePath + '\\' + fileName))
                 {
-                    File.Copy(this.SourcePath + '\\' + path, this.textBox.Text + '\\' + path);
-                }               
-            }
-            catch 
-            { 
-                try 
-                {
-                    foreach (string path in this.SourcePaths)
+                    try
                     {
-                        this.CopyDirectory(this.SourcePath + '\\' + path, this.textBox.Text + '\\' + path);
-                    }                   
-                } 
-                catch 
-                { 
-                    Functions.TextAlert("Error!");
-                } 
+                        this.CopyDirectory(this.SourcePath + '\\' + fileName, this.textBox.Text + '\\' + fileName);
+                    }
+                    catch
+                    {
+                        directoryCount++;
+                    }
+                }
+                else if (File.Exists(this.SourcePath + '\\' + fileName))
+                {
+                    try
+                    {
+                        File.Copy(this.SourcePath + '\\' + fileName, this.textBox.Text + '\\' + fileName);
+                    }
+                    catch
+                    {
+                        fileCount++;
+                    }
+                }
+                else
+                {
+                    Functions.TextAlert("Already Exists!");
+                }
             }
-                    
+
+            if (directoryCount > 1) { dir = "directories"; }
+            if (fileCount > 1) { file = "files"; }
+
+            if (directoryCount > 0 && fileCount > 0) { Functions.TextAlert($"{directoryCount} {dir} and {fileCount} {file} could not be coppied!"); }
+            else if (directoryCount > 0) { Functions.TextAlert($"{directoryCount} {dir} could not be coppied!"); }
+            else if (fileCount > 0) { Functions.TextAlert($"{fileCount} {file} could not be coppied!"); }
+
             StaticPrinter.PrintTable();
             Application.RenewWindow();
         }

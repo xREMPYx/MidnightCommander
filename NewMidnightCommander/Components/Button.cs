@@ -27,27 +27,27 @@ namespace NewMidnightCommander
         {
             switch (info.Key)
             {
-                case ConsoleKey.Enter: EnterClick(); break;
+                case ConsoleKey.Enter: this.EnterClick(); break;
             }
         }
 
         public void Print(bool active)
         {
-            string label = Label;
+            string label;
 
             if (active) 
             { 
-                label = "[ < " + Label + " > ]";
+                label = "[ < " + this.Label + " > ]";
                 Console.ForegroundColor = this.SelectedColor;
             }
             else
             {
                 Console.ForegroundColor = this.ForeColor;
-                label = "[   " + Label + "   ]";
+                label = "[   " + this.Label + "   ]";
             }
 
             Console.BackgroundColor = this.BackColor;          
-            Functions.Write(PositionX,PositionY,label);
+            Functions.Write(this.PositionX, this.PositionY,label);
             Console.ForegroundColor = this.ForeColor;
         }
     }

@@ -8,23 +8,23 @@ namespace NewMidnightCommander
 {
     public class DeleteFilesNotEmpty : PopUpWindow
     {
-        private string Path;
+        private string SourcePath;
 
-        private List<string> SourcePaths;
+        private List<string> FileNames;
 
-        public DeleteFilesNotEmpty(string path, List<string> sourcePaths)
+        public DeleteFilesNotEmpty(string sourcePath, List<string> fileNames)
         {
             this.Height = 5;
             this.Width = 50;
             this.Title = "Delete Alert";
-            this.AdditionalText = "Directories are not empty!".PadLeft(this.Width/2 + 8);
+            this.AdditionalText = "Not all of selected directories are empty!".PadLeft(this.Width/2 + 20);
             this.SecondAdditionalText = "Are you sure you want to delete it?".PadLeft(this.Width - 8);
             this.ForeColor = ConsoleColor.Black;
             this.BackColor = ConsoleColor.DarkRed;
             this.TitleColor = ConsoleColor.Black;
             this.ItemBackColor = ConsoleColor.DarkRed;
-            this.SourcePaths = sourcePaths;
-            this.Path = path;
+            this.FileNames = fileNames;
+            this.SourcePath = sourcePath;
             this.ShowAdditional = true;
 
             Container container = new Container();
@@ -55,27 +55,45 @@ namespace NewMidnightCommander
 
         private void OkPressed()
         {
-            try 
+            int directoryCount = 0;
+            int fileCount = 0;
+
+            string dir = "directory";
+            string file = "file";
+
+            foreach (string fileName in this.FileNames)
             {
-                foreach (var path in this.SourcePaths)
+                if (Directory.Exists(this.SourcePath + '\\' + fileName))
                 {
-                    File.Delete(this.Path + '\\' + path);
-                }                
-            }
-            catch
-            {
-                try
-                {
-                    foreach (var path in this.SourcePaths)
+                    try
                     {
-                        Directory.Delete(this.Path + '\\' + path, true);
-                    }                   
+                        Directory.Delete(this.SourcePath + '\\' + fileName, true);
+                    }
+                    catch
+                    {
+                        directoryCount++;
+                    }
                 }
-                catch
+                else if (File.Exists(this.SourcePath + '\\' + fileName))
                 {
-                    Functions.TextAlert("Error!");
+                    try
+                    {
+                        File.Delete(this.SourcePath + '\\' + fileName);
+                    }
+                    catch
+                    {
+                        fileCount++;
+                    }
                 }               
             }
+
+            if(directoryCount > 1) { dir = "directories"; }
+            if(fileCount > 1) { file = "files"; }
+
+            if(directoryCount > 0 && fileCount > 0) { Functions.TextAlert($"{directoryCount} {dir} and {fileCount} {file} cannot be deleted!"); }
+            else if(directoryCount > 0) { Functions.TextAlert($"{directoryCount} {dir} cannot be deleted!"); }
+            else if(fileCount > 0) { Functions.TextAlert($"{fileCount} {file} cannot be deleted!"); }
+
             StaticPrinter.PrintTable();
             Application.RenewWindow();           
         }
