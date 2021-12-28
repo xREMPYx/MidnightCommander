@@ -15,7 +15,7 @@ namespace NewMidnightCommander
         {
             this.Height = 5;
             this.Width = 50;
-            this.Title = "Delete Alert";
+            this.Title = "Save Alert";
             this.AdditionalText = "Your text is not saved!".PadLeft(this.Width/2 + 10);
             this.SecondAdditionalText = "Do you want to save it?".PadLeft(this.Width/2 + 10);
             this.ForeColor = ConsoleColor.Black;

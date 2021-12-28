@@ -15,6 +15,9 @@ namespace NewMidnightCommander
         private int PositionXTop;
         private int PositionYTop;
 
+        private bool IsMarkOn;
+        private bool IsMarkAfterF1On;
+
         private List<string> TextList;
         private List<string> InitialTextList;
 
@@ -26,6 +29,8 @@ namespace NewMidnightCommander
             this.PositionY = 0;
             this.TextList = this.InitializeTextList();
             this.InitialTextList = this.InitializeTextList();
+            this.IsMarkOn = false;
+            this.IsMarkAfterF1On = false;
         }
    
         public void HandleKey(ConsoleKeyInfo info)
@@ -201,6 +206,16 @@ namespace NewMidnightCommander
             this.PositionX = 0;
             this.PositionXTop = 0;
             this.MoveDown();
+        }
+
+        private void SetMarkFilesBools()
+        {
+            if (this.IsMarkOn == false && this.IsMarkAfterF1On == false)
+            {
+                this.IsMarkOn = true; this.IsMarkAfterF1On = false;
+            }
+            else if (this.IsMarkOn == true && this.IsMarkAfterF1On == false) { this.IsMarkOn = true; this.IsMarkAfterF1On = true; }
+            else if (this.IsMarkOn == true && this.IsMarkAfterF1On == true) { this.IsMarkOn = false; this.IsMarkAfterF1On = false; }
         }
 
         private void Save()

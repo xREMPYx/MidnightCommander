@@ -11,14 +11,14 @@ namespace NewMidnightCommander
         public string Path;
         private string InitialPath;
 
-        private int Top = 0;
-        private int Selected  = 0;
-        private int PadRightPanel = 0;
+        private int Top;
+        private int Selected;
+        private int PadRightPanel;
 
         private bool LeftPanel;
         private bool IsFindItemOn;
         private bool IsMarkItemsOn;
-        private bool IsMarkItemsOnAfterF1;
+        private bool IsMarkItemsAfterF1On;
 
         private List<string[]> Files;
 
@@ -41,6 +41,10 @@ namespace NewMidnightCommander
                 this.LeftPanel = false;
             }
             this.Files = DataGetter.Files(this.Path);
+
+            this.Top = 0;
+            this.Selected = 0;
+            this.PadRightPanel = 0;
         }
 
         public void Print(bool active)
@@ -56,7 +60,7 @@ namespace NewMidnightCommander
             {
                 if (i < this.Files.Count)
                 {
-                    if (((this.IsMarkItemsOn == false) || (this.IsMarkItemsOn == true) && (this.IsMarkItemsOnAfterF1 == true)) && i == this.Selected && ((ProgramSettings.LeftPanelActive && this.LeftPanel) || (ProgramSettings.LeftPanelActive == false && this.LeftPanel == false)))
+                    if (((this.IsMarkItemsOn == false) || (this.IsMarkItemsOn == true) && (this.IsMarkItemsAfterF1On == true)) && i == this.Selected && ((ProgramSettings.LeftPanelActive && this.LeftPanel) || (ProgramSettings.LeftPanelActive == false && this.LeftPanel == false)))
                     {                    
                         Console.ForegroundColor = ProgramSettings.PanelSelectedForeColor;
                     }
@@ -131,7 +135,7 @@ namespace NewMidnightCommander
             if (Reset(info, 1)) { this.IsFindItemOn = false; }
 
             if (this.IsFindItemOn) { FindItem(info); }
-            if (this.IsMarkItemsOn && this.IsMarkItemsOnAfterF1 == false) { MarkFiles(); }
+            if (this.IsMarkItemsOn && this.IsMarkItemsAfterF1On == false) { MarkFiles(); }
         }
 
         // Move Actions
@@ -296,14 +300,14 @@ namespace NewMidnightCommander
 
         private void SetMarkFilesBools()
         {
-            if( this.IsMarkItemsOn == false && this.IsMarkItemsOnAfterF1 == false && this.IsSelectedItem()) 
+            if( this.IsMarkItemsOn == false && this.IsMarkItemsAfterF1On == false && this.IsSelectedItem()) 
             {
-                this.IsMarkItemsOn = true; this.IsMarkItemsOnAfterF1 = false;
+                this.IsMarkItemsOn = true; this.IsMarkItemsAfterF1On = false;
                 this.markFiles = new MarkFiles(this.Files);
                 this.markFiles.startFileSelected = this.Selected;
             }
-            else if( this.IsMarkItemsOn == true && this.IsMarkItemsOnAfterF1 == false) { this.IsMarkItemsOn = true; this.IsMarkItemsOnAfterF1 = true; }
-            else if( this.IsMarkItemsOn == true && this.IsMarkItemsOnAfterF1 == true) { this.IsMarkItemsOn = false; this.IsMarkItemsOnAfterF1 = false; }
+            else if( this.IsMarkItemsOn == true && this.IsMarkItemsAfterF1On == false) { this.IsMarkItemsOn = true; this.IsMarkItemsAfterF1On = true; }
+            else if( this.IsMarkItemsOn == true && this.IsMarkItemsAfterF1On == true) { this.IsMarkItemsOn = false; this.IsMarkItemsAfterF1On = false; }
         }
 
         private void MarkFiles()
@@ -333,7 +337,7 @@ namespace NewMidnightCommander
         private void ResetMark()
         {
             this.IsMarkItemsOn = false;
-            this.IsMarkItemsOnAfterF1 = false;
+            this.IsMarkItemsAfterF1On = false;
         }
 
         private bool IfNameIsEqual(string fileName, List<string> markedFiles)
