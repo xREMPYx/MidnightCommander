@@ -8,9 +8,15 @@ namespace NewMidnightCommander
 {
     public class Container : IComponent 
     {
-        public int Selected { get; set; } = 0;
+        public int Selected { get; set; }
         
-        public List<IComponent> components = new();
+        public List<IComponent> components { get; set; }
+
+        public Container()
+        {
+            this.Selected = 0;
+            this.components = new();
+        }
 
         public virtual void HandleKey(ConsoleKeyInfo info)
         {

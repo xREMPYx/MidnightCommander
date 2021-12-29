@@ -27,6 +27,7 @@ namespace NewMidnightCommander
 
         public static void ReadKeyError()
         {
+            Console.CursorVisible = false;
             Console.SetCursorPosition(103, 30);
             Console.ForegroundColor= ConsoleColor.Black;
             Console.BackgroundColor = ConsoleColor.Black;
