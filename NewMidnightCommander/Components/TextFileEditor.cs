@@ -39,6 +39,8 @@ namespace NewMidnightCommander
             else if (info.Key == ConsoleKey.DownArrow) { MoveDown(); }
             else if (info.Key == ConsoleKey.LeftArrow) { MoveLeft(); }
             else if (info.Key == ConsoleKey.RightArrow) { MoveRight(); }
+            else if (info.Key == ConsoleKey.Home) { MoveToRowStart(); }
+            else if (info.Key == ConsoleKey.End) { MoveToRowEnd(); }
             else if (info.Key == ConsoleKey.Backspace) { RemoveChar(); }
             else if (info.Key == ConsoleKey.Enter) { Enter(); }
             else if (info.Key == ConsoleKey.F2) { Save(); }
@@ -86,6 +88,9 @@ namespace NewMidnightCommander
             {
                 if(line == string.Empty) { this.TextList.Remove(line); }
             }
+
+            textList.Add(string.Empty);
+
             return textList;
         }
 
@@ -147,6 +152,19 @@ namespace NewMidnightCommander
             }
         }   
 
+        private void MoveToRowStart()
+        {
+            this.PositionX = 0;
+            this.PositionXTop = 0;
+        }
+
+        private void MoveToRowEnd()
+        {
+            this.PositionX = this.TextList[this.PositionY].Length;
+            this.PositionXTop = this.TextList[this.PositionY].Length + 1 - ProgramSettings.PanelWidth;
+            if(this.PositionXTop < 0) { this.PositionXTop = 0; }
+        }
+
         // Text Edit Actions
 
         private void AddChar(ConsoleKeyInfo info)
@@ -175,7 +193,7 @@ namespace NewMidnightCommander
                 {
                     this.TextList.RemoveAt(this.PositionY);
                     this.MoveUp();
-                    this.PositionX = this.TextList[this.PositionY].Length;
+                    this.MoveToRowEnd();
                 }
             }
             else if (this.PositionX == 0 && this.PositionY == 0 && this.TextList.Count > 1 && this.TextList[this.PositionY].Length < 1)

@@ -32,6 +32,7 @@ namespace NewMidnightCommander
                 this.Path = ProgramSettings.LeftPanelPath;
                 this.InitialPath = this.Path;
                 this.LeftPanel = true;
+                this.PadRightPanel = 0;
             }
             else
             {
@@ -43,8 +44,7 @@ namespace NewMidnightCommander
             this.Files = DataGetter.Files(this.Path);
 
             this.Top = 0;
-            this.Selected = 0;
-            this.PadRightPanel = 0;
+            this.Selected = 0;        
         }
 
         public void Print(bool active)

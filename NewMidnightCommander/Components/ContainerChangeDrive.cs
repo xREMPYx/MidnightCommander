@@ -32,10 +32,13 @@ namespace NewMidnightCommander
             for (int i = Top; i < 5 + Top; i++)
             {             
                 Console.CursorVisible = false;
-                this.disks[i].PositionX = this.PositionX + Pad;
-                this.disks[i].PositionY = this.PositionY;
-                this.disks[i].Print(i == this.Selected);
-                Pad += 7;
+                if(i < this.disks.Count)
+                {
+                    this.disks[i].PositionX = this.PositionX + Pad;
+                    this.disks[i].PositionY = this.PositionY;
+                    this.disks[i].Print(i == this.Selected);
+                    Pad += 7;
+                }      
             }                  
             
             Functions.ReadKeyError();
