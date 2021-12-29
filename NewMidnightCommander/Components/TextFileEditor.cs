@@ -226,7 +226,7 @@ namespace NewMidnightCommander
             this.MoveDown();
         }
 
-        private void SetMarkFilesBools()
+        /*private void SetMarkFilesBools()
         {
             if (this.IsMarkOn == false && this.IsMarkAfterF1On == false)
             {
@@ -234,7 +234,7 @@ namespace NewMidnightCommander
             }
             else if (this.IsMarkOn == true && this.IsMarkAfterF1On == false) { this.IsMarkOn = true; this.IsMarkAfterF1On = true; }
             else if (this.IsMarkOn == true && this.IsMarkAfterF1On == true) { this.IsMarkOn = false; this.IsMarkAfterF1On = false; }
-        }
+        }*/
 
         private void Save()
         {
