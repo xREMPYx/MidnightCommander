@@ -11,8 +11,7 @@ namespace NewMidnightCommander
         private int index = 0;
         public List<string> Matches { get; set; }
         public List<string> ItemNames { get; set; }
-
-        public StringBuilder sb = new();
+        public StringBuilder sb { get; set; }
 
         public FindItem(List<string[]> Files)
         {
@@ -23,6 +22,7 @@ namespace NewMidnightCommander
             }
             this.Matches = itemNames;
             this.ItemNames = itemNames;
+            this.sb = new();
         }
 
         public void Find(ConsoleKeyInfo info)
@@ -37,7 +37,7 @@ namespace NewMidnightCommander
             if (shouldBeAdded) { this.sb.Append(info.KeyChar.ToString()); this.index++; this.Matches = matches; }         
         }
 
-        public int selectedForFileManager(int selected)
+        public int SelectedForFileManager(int selected)
         {
             if(this.ItemNames.Count == this.Matches.Count) { return selected; }
 

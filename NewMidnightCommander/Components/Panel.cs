@@ -65,7 +65,7 @@ namespace NewMidnightCommander
                         Console.ForegroundColor = ProgramSettings.PanelSelectedForeColor;
                     }
 
-                    if (this.IsMarkItemsOn && IfNameIsEqual(this.Files[i][0], markFiles.MarkedFileNames) && ((ProgramSettings.LeftPanelActive && this.LeftPanel) || (ProgramSettings.LeftPanelActive == false && this.LeftPanel == false)))
+                    if (this.IsMarkItemsOn && IfNameIsEqual(this.Files[i][0], this.markFiles.MarkedFileNames) && ((ProgramSettings.LeftPanelActive && this.LeftPanel) || (ProgramSettings.LeftPanelActive == false && this.LeftPanel == false)))
                     {
                         Console.ForegroundColor = ProgramSettings.PanelMarkForeSelected;
                     }
@@ -101,11 +101,11 @@ namespace NewMidnightCommander
 
             if (this.IsFindItemOn) 
             {
-                StaticPrinter.PrintSelectedItem('\\' + findItem.sb.ToString(), PadRightPanel);
+                StaticPrinter.PrintSelectedItem('\\' + this.findItem.sb.ToString(), this.PadRightPanel);
             } 
             else
             {
-                StaticPrinter.PrintSelectedItem(this.Files[this.Selected][0], PadRightPanel);
+                StaticPrinter.PrintSelectedItem(this.Files[this.Selected][0], this.PadRightPanel);
             }
 
             StaticPrinter.PrintPath(this.Path, this.PadRightPanel);
@@ -129,7 +129,7 @@ namespace NewMidnightCommander
             else if (info.Key == ConsoleKey.F5 && IsSelectedItem()) { Copy(); }
             else if (info.Key == ConsoleKey.F6 && IsSelectedItem()) { RenMov(); }
             else if (info.Key == ConsoleKey.F8 && IsSelectedItem()) { Delete(); }
-            else if (info.Key == ConsoleKey.F && IsFindItemOn == false) { this.findItem = new FindItem(this.Files); IsFindItemOn = true; }
+            else if (info.Key == ConsoleKey.F && this.IsFindItemOn == false) { this.findItem = new FindItem(this.Files); this.IsFindItemOn = true; }
           
             if (Reset(info, 0)) { ResetMark(); }
             if (Reset(info, 1)) { this.IsFindItemOn = false; }
@@ -322,7 +322,7 @@ namespace NewMidnightCommander
         private void FindItem(ConsoleKeyInfo info)
         {
             this.findItem.Find(info);
-            this.Selected = this.findItem.selectedForFileManager(this.Selected);
+            this.Selected = this.findItem.SelectedForFileManager(this.Selected);
 
             if(this.Selected > this.Top + 22 || this.Selected < this.Top)
             {
