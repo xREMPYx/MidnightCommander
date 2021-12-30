@@ -18,7 +18,7 @@ namespace NewMidnightCommander
             container.components.Add(leftPanel);
             container.components.Add(rightPanel);
 
-            this.component = container;
+            this.Component = container;
 
             StaticPrinter.PrintTable();
         }

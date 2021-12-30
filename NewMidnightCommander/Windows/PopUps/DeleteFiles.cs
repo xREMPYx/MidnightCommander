@@ -36,7 +36,7 @@ namespace NewMidnightCommander
             container.components.Add(OkButton);
             container.components.Add(CancelButton);
 
-            this.component = container;
+            this.Component = container;
             this.PrintBox();           
         }
 
@@ -79,7 +79,7 @@ namespace NewMidnightCommander
                 }
                 else
                 {
-                    Functions.TextAlert("Already Exists!");
+                    Functions.TextAlert("Error");
                 }
             }
 

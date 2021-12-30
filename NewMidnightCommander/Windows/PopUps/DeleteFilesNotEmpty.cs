@@ -47,7 +47,7 @@ namespace NewMidnightCommander
             container.components.Add(OkButton);
             container.components.Add(CancelButton);
 
-            this.component = container;
+            this.Component = container;
             this.PrintBox();           
         }
 

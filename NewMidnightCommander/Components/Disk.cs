@@ -41,9 +41,9 @@ namespace NewMidnightCommander
 
             Console.BackgroundColor = ProgramSettings.BoxBackColor;
 
-            Functions.Write(this.PositionX, this.PositionY, this.Name.PadRight(5));
-            Functions.Write(this.PositionX, this.PositionY + 2, this.TotalSize.PadRight(5));
-            Functions.Write(this.PositionX, this.PositionY + 4, this.FreeSpace.PadRight(5));
+            Functions.Write(this.PositionX, this.PositionY, this.Name.PadRight(6));
+            Functions.Write(this.PositionX, this.PositionY + 2, this.TotalSize.PadRight(6));
+            Functions.Write(this.PositionX, this.PositionY + 4, this.FreeSpace.PadRight(6));
         }
 
         private void EnterPressed()

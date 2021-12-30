@@ -12,7 +12,7 @@ namespace NewMidnightCommander
         {
             TextFileEditor textFileEditor = new(path);
 
-            this.component = textFileEditor;
+            this.Component = textFileEditor;
         }
     }
 }

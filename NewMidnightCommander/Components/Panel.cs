@@ -202,6 +202,10 @@ namespace NewMidnightCommander
 
         private void Home() 
         {
+            if(this.Path != this.InitialPath) 
+            {
+                PageUp(); 
+            }
             if(ProgramSettings.LeftPanelActive) 
             {
                 ProgramSettings.LeftPanelPath = this.InitialPath;
@@ -210,7 +214,7 @@ namespace NewMidnightCommander
             {
                 ProgramSettings.RightPanelPath = this.InitialPath;
             }
-            this.Path = this.InitialPath;  
+            this.Path = this.InitialPath;
         }
 
         // File Actions

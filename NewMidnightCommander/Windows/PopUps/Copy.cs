@@ -41,7 +41,7 @@ namespace NewMidnightCommander
             container.components.Add(textBox);
             container.Selected = 2;
 
-            this.component = container;
+            this.Component = container;
             this.textBox = textBox;
             this.PrintBox();
         }

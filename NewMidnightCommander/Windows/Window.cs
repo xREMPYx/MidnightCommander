@@ -8,16 +8,16 @@ namespace NewMidnightCommander
 {
     public abstract class Window
     {
-        public IComponent component;
+        public IComponent Component { get; set; }
 
         public virtual void Print()
         {
-            component.Print(true);
+            this.Component.Print(true);
         }
 
         public virtual void HandleKey(ConsoleKeyInfo info)
         {
-            component.HandleKey(info);
+            this.Component.HandleKey(info);
         }
     }
 }

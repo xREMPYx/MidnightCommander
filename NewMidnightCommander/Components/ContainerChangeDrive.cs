@@ -29,16 +29,14 @@ namespace NewMidnightCommander
         public override void Print(bool active)
         {
             int Pad = 14;
-            for (int i = Top; i < 5 + Top; i++)
+            int repeatCount = this.disks.Count; if (repeatCount > 5) { repeatCount = 0; }
+            for (int i = Top; i < repeatCount + Top; i++)
             {             
                 Console.CursorVisible = false;
-                if(i < this.disks.Count)
-                {
-                    this.disks[i].PositionX = this.PositionX + Pad;
-                    this.disks[i].PositionY = this.PositionY;
-                    this.disks[i].Print(i == this.Selected);
-                    Pad += 7;
-                }      
+                this.disks[i].PositionX = this.PositionX + Pad;
+                this.disks[i].PositionY = this.PositionY;
+                this.disks[i].Print(i == this.Selected);
+                Pad += 7;
             }                  
             
             Functions.ReadKeyError();

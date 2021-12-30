@@ -15,9 +15,6 @@ namespace NewMidnightCommander
         private int PositionXTop;
         private int PositionYTop;
 
-        private bool IsMarkOn;
-        private bool IsMarkAfterF1On;
-
         private List<string> TextList;
         private List<string> InitialTextList;
 
@@ -29,8 +26,6 @@ namespace NewMidnightCommander
             this.PositionY = 0;
             this.TextList = this.InitializeTextList();
             this.InitialTextList = this.InitializeTextList();
-            this.IsMarkOn = false;
-            this.IsMarkAfterF1On = false;
         }
    
         public void HandleKey(ConsoleKeyInfo info)
@@ -108,7 +103,7 @@ namespace NewMidnightCommander
             }
             if(this.PositionX > this.TextList[this.PositionY].Length - 1)
             {
-                this.PositionX = this.TextList[this.PositionY].Length;
+                this.MoveToRowEnd();
             }
         }
 
@@ -124,7 +119,7 @@ namespace NewMidnightCommander
             }
             if(this.PositionX > this.TextList[this.PositionY].Length)
             {
-                this.PositionX = this.TextList[this.PositionY].Length;
+                this.MoveToRowEnd();
             }
         }
 
@@ -225,16 +220,6 @@ namespace NewMidnightCommander
             this.PositionXTop = 0;
             this.MoveDown();
         }
-
-        /*private void SetMarkFilesBools()
-        {
-            if (this.IsMarkOn == false && this.IsMarkAfterF1On == false)
-            {
-                this.IsMarkOn = true; this.IsMarkAfterF1On = false;
-            }
-            else if (this.IsMarkOn == true && this.IsMarkAfterF1On == false) { this.IsMarkOn = true; this.IsMarkAfterF1On = true; }
-            else if (this.IsMarkOn == true && this.IsMarkAfterF1On == true) { this.IsMarkOn = false; this.IsMarkAfterF1On = false; }
-        }*/
 
         private void Save()
         {

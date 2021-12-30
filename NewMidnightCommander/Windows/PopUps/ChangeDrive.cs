@@ -28,7 +28,7 @@ namespace NewMidnightCommander
 
             ContainerChangeDrive containerChangeDrive = new ContainerChangeDrive(this.PositionX, this.PositionY);     
 
-            this.component = containerChangeDrive;
+            this.Component = containerChangeDrive;
 
             this.PrintBox();
         }
