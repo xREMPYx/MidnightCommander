@@ -31,8 +31,14 @@ namespace NewMidnightCommander
             List<string> matches = new();
             for (int i = 0; i < this.Matches.Count; i++)
             {
-                if (this.index > this.Matches[i].Length - 1) { }
-                else { if (this.Matches[i][this.index].ToString() == info.KeyChar.ToString()) { matches.Add(this.Matches[i]); shouldBeAdded = true; } }                
+                if (this.index > this.Matches[i].Length - 1)  { }
+                else 
+                {
+                    if (this.Matches[i][this.index].ToString() == info.KeyChar.ToString())
+                    {
+                        matches.Add(this.Matches[i]); shouldBeAdded = true;
+                    }
+                }                
             }
             if (shouldBeAdded) { this.sb.Append(info.KeyChar.ToString()); this.index++; this.Matches = matches; }         
         }
