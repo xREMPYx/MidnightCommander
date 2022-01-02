@@ -36,6 +36,8 @@ namespace NewMidnightCommander
             else if (info.Key == ConsoleKey.RightArrow) { MoveRight(); }
             else if (info.Key == ConsoleKey.Home) { MoveToRowStart(); }
             else if (info.Key == ConsoleKey.End) { MoveToRowEnd(); }
+            else if (info.Key == ConsoleKey.PageUp) { MoveToTopRow(); }
+            else if (info.Key == ConsoleKey.PageDown) { MoveToLastRow(); }        
             else if (info.Key == ConsoleKey.Backspace) { RemoveChar(); }
             else if (info.Key == ConsoleKey.Enter) { Enter(); }
             else if (info.Key == ConsoleKey.F2) { Save(); }
@@ -158,6 +160,21 @@ namespace NewMidnightCommander
             this.PositionX = this.TextList[this.PositionY].Length;
             this.PositionXTop = this.TextList[this.PositionY].Length + 1 - ProgramSettings.PanelWidth;
             if(this.PositionXTop < 0) { this.PositionXTop = 0; }
+        }
+
+        private void MoveToTopRow()
+        {
+            this.PositionY = 0;
+            this.PositionYTop = 0;
+            if(this.PositionX > this.TextList[this.PositionY].Length) { this.MoveToRowEnd(); }
+        }
+        
+        private void MoveToLastRow()
+        {
+            this.PositionY = this.TextList.Count - 1;
+            this.PositionYTop = this.TextList.Count - ProgramSettings.PanelHeight + 1;
+            if(this.PositionYTop < 0) { this.PositionYTop = 0; }
+            if (this.PositionX > this.TextList[this.PositionY].Length) { this.MoveToRowEnd(); }
         }
 
         // Text Edit Actions
