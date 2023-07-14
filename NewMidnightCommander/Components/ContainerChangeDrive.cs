@@ -29,7 +29,7 @@ namespace NewMidnightCommander
         public override void Print(bool active)
         {
             int Pad = 14;
-            int repeatCount = this.disks.Count; if (repeatCount > 5) { repeatCount = 0; }
+            int repeatCount = 5;
             for (int i = Top; i < repeatCount + Top; i++)
             {             
                 Console.CursorVisible = false;
